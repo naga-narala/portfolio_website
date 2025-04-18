@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { Scene } from './components/Scene';
+import emailjs from '@emailjs/browser'; // Import EmailJS
+// import { Scene } from './components/Scene'; // Scene is unused, commented out
 import { ProjectModal } from './components/ProjectModal';
 import { MLBackground } from './components/MLBackground';
 import { Github, Linkedin, Youtube, ExternalLink, Send, Mail, MapPin, Phone, Download } from 'lucide-react';
@@ -21,6 +22,8 @@ function App() {
   const windowWidth = useWindowWidth(); // Get window width
   const isMobile = windowWidth < 768; // Define mobile breakpoint
   const [isScrolled, setIsScrolled] = useState(false); // State for scroll detection
+  const [formStatus, setFormStatus] = useState(''); // State for submission status
+  const [isConfirming, setIsConfirming] = useState(false); // State for confirmation step
 
   const [formData, setFormData] = useState({
     name: '',
@@ -84,7 +87,47 @@ function App() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formData);
+    // Don't send yet, just show confirmation
+    setIsConfirming(true);
+    setFormStatus(''); // Clear any previous status
+  };
+
+  const handleConfirmSend = () => {
+    setFormStatus('Sending...'); // Indicate sending
+    setIsConfirming(false); // Move away from confirmation view
+
+    // Replace with your actual EmailJS Service ID, Template ID, and Public Key
+    const serviceID = 'YOUR_SERVICE_ID';
+    const templateID = 'YOUR_TEMPLATE_ID';
+    const publicKey = 'YOUR_PUBLIC_KEY';
+
+    // Ensure the template variables in EmailJS match these keys
+    const templateParams = {
+      from_name: formData.name,
+      from_email: formData.email,
+      message: formData.message,
+      to_email: 'gptstealer@gmail.com' // You can set this in the template or here
+    };
+
+    emailjs.send(serviceID, templateID, templateParams, publicKey)
+      .then((response) => {
+         console.log('SUCCESS!', response.status, response.text);
+         setFormStatus('Message sent successfully!');
+         // Clear the form
+         setFormData({ name: '', email: '', message: '' });
+         // Optionally hide status message after a delay
+         setTimeout(() => setFormStatus(''), 5000);
+      }, (err) => {
+         console.error('FAILED...', err);
+         setFormStatus('Failed to send message. Please try again.');
+         // Optionally hide status message after a delay
+         setTimeout(() => setFormStatus(''), 5000);
+      });
+  };
+
+  const handleEdit = () => {
+    setIsConfirming(false);
+    setFormStatus(''); // Clear status when going back to edit
   };
 
   useEffect(() => {
@@ -325,7 +368,7 @@ function App() {
                   </div>
                   <div>
                     <h3 className="text-red-500 font-semibold">Email</h3>
-                    <p className="text-gray-400">contact@example.com</p>
+                    <p className="text-gray-400">sravankumar.nnv@gmail.com</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
@@ -334,7 +377,7 @@ function App() {
                   </div>
                   <div>
                     <h3 className="text-red-500 font-semibold">Location</h3>
-                    <p className="text-gray-400">San Francisco, CA</p>
+                    <p className="text-gray-400">Clayton, VIC</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
@@ -343,45 +386,71 @@ function App() {
                   </div>
                   <div>
                     <h3 className="text-red-500 font-semibold">Phone</h3>
-                    <p className="text-gray-400">+1 (555) 123-4567</p>
+                    <p className="text-gray-400">+61460766511</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <input
-                  type="text"
-                  placeholder="Your Name"
-                  className="contact-input"
-                  value={formData.name}
-                  onChange={(e) => setFormData({...formData, name: e.target.value})}
-                />
+            {/* Conditional Rendering: Form or Confirmation */}
+            {!isConfirming ? (
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Your Name"
+                    className="contact-input"
+                    value={formData.name}
+                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                    required
+                  />
+                </div>
+                <div>
+                  <input
+                    type="email"
+                    placeholder="Your Email"
+                    className="contact-input"
+                    value={formData.email}
+                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                    required
+                  />
+                </div>
+                <div>
+                  <textarea
+                    placeholder="Your Message"
+                    rows={4}
+                    className="contact-input"
+                    value={formData.message}
+                    onChange={(e) => setFormData({...formData, message: e.target.value})}
+                    required
+                  ></textarea>
+                </div>
+                <button type="submit" className="submit-button">
+                  Review & Send
+                  <Send className="w-4 h-4 ml-2" />
+                </button>
+              </form>
+            ) : (
+              <div className="space-y-4 p-6 bg-[#1f0505] rounded-lg border border-red-900/50">
+                <h3 className="text-xl font-semibold text-red-400 mb-4">Confirm Your Details</h3>
+                <p><strong className="text-red-500">Name:</strong> {formData.name}</p>
+                <p><strong className="text-red-500">Email:</strong> {formData.email}</p>
+                <p><strong className="text-red-500">Message:</strong></p>
+                <p className="whitespace-pre-wrap p-2 bg-black/20 rounded">{formData.message}</p>
+                <div className="flex gap-4 mt-6">
+                  <button onClick={handleEdit} className="submit-button bg-gray-600 hover:bg-gray-500">
+                    Edit Details
+                  </button>
+                  <button onClick={handleConfirmSend} className="submit-button" disabled={formStatus === 'Sending...'}>
+                    {formStatus === 'Sending...' ? 'Sending...' : 'Confirm & Send'}
+                  </button>
+                </div>
               </div>
-              <div>
-                <input
-                  type="email"
-                  placeholder="Your Email"
-                  className="contact-input"
-                  value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
-                />
-              </div>
-              <div>
-                <textarea
-                  placeholder="Your Message"
-                  rows={4}
-                  className="contact-input"
-                  value={formData.message}
-                  onChange={(e) => setFormData({...formData, message: e.target.value})}
-                ></textarea>
-              </div>
-              <button type="submit" className="submit-button">
-                Send Message
-                <Send className="w-4 h-4 ml-2" />
-              </button>
-            </form>
+            )}
+
+            {/* Display submission status (outside conditional rendering) */}
+            {formStatus && !isConfirming && <p className={`mt-4 text-center ${formStatus.includes('Failed') ? 'text-red-500' : 'text-green-500'}`}>{formStatus}</p>}
+
           </div>
         </div>
       </section>
