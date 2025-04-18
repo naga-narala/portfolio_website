@@ -157,14 +157,17 @@ function App() {
       const container = containerRef.current;
       const containerRect = container.getBoundingClientRect();
       
-      canvas.width = containerRect.width;
-      canvas.height = containerRect.height;
+      // Ensure canvas dimensions are updated if container size changes
+      if (canvas.width !== containerRect.width || canvas.height !== containerRect.height) {
+        canvas.width = containerRect.width;
+        canvas.height = containerRect.height;
+      }
       
       const ctx = canvas.getContext('2d');
       if (!ctx) return;
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.strokeStyle = '#8B0000';
+      ctx.strokeStyle = '#8B0000'; // Dark Red
       ctx.lineWidth = 2;
 
       projectRefs.current.forEach((ref, index) => {
@@ -176,6 +179,15 @@ function App() {
             const currentRect = currentCard.getBoundingClientRect();
             const nextRect = nextCard.getBoundingClientRect();
 
+            // Check if elements are actually in the viewport before drawing
+            // This prevents drawing based on incorrect initial rects if elements are off-screen
+            if (currentRect.top > window.innerHeight || currentRect.bottom < 0 ||
+                nextRect.top > window.innerHeight || nextRect.bottom < 0) {
+              // Skip drawing if either card is completely out of view
+              // return; // Or continue if partial visibility drawing is desired
+            }
+
+
             let startX, endX;
 
             if (isMobile) {
@@ -183,13 +195,13 @@ function App() {
               startX = currentRect.left + currentRect.width / 2 - containerRect.left;
               endX = nextRect.left + nextRect.width / 2 - containerRect.left;
             } else {
-              // Original logic for desktop (alternating sides)
+              // Desktop: Connect alternating edges
               startX = index % 2 === 0 ? 
-                currentRect.right - containerRect.left : 
-                currentRect.left - containerRect.left;
+                currentRect.right - containerRect.left : // Right edge for even cards
+                currentRect.left - containerRect.left;  // Left edge for odd cards
               endX = index % 2 === 0 ? 
-                nextRect.left - containerRect.left : 
-                nextRect.right - containerRect.left;
+                nextRect.left - containerRect.left :   // Left edge for next card (odd)
+                nextRect.right - containerRect.left; // Right edge for next card (even)
             }
             
             const startY = currentRect.top + (currentRect.height / 2) - containerRect.top;
@@ -197,7 +209,11 @@ function App() {
 
             ctx.beginPath();
             ctx.moveTo(startX, startY);
-            ctx.lineTo(endX, endY);
+            // Use quadratic curve for a slightly smoother connection if desired
+            // const controlX = (startX + endX) / 2;
+            // const controlY = startY; // Keep control point level with start for horizontal curve start
+            // ctx.quadraticCurveTo(controlX, startY, endX, endY); // Example curve
+            ctx.lineTo(endX, endY); // Straight line connection
             ctx.stroke();
           }
         }
@@ -208,19 +224,25 @@ function App() {
     let timeoutId: number | null = null;
     const debouncedDraw = () => {
       if (timeoutId) clearTimeout(timeoutId);
-      timeoutId = window.setTimeout(drawConnectingLines, 50); // Adjust delay as needed
+      // Use setTimeout with requestAnimationFrame for better timing
+      timeoutId = window.setTimeout(() => {
+        window.requestAnimationFrame(drawConnectingLines);
+      }, 50); // Adjust delay as needed (50ms debounce)
     };
 
-    debouncedDraw(); // Initial draw
+    // Trigger initial draw slightly delayed to allow layout stabilization
+    const initialDrawTimeoutId = window.setTimeout(debouncedDraw, 100); // 100ms delay for initial draw
+
     window.addEventListener('resize', debouncedDraw);
-    window.addEventListener('scroll', debouncedDraw);
+    window.addEventListener('scroll', debouncedDraw); // Keep scroll listener to redraw if needed
 
     return () => {
       window.removeEventListener('resize', debouncedDraw);
       window.removeEventListener('scroll', debouncedDraw);
-      if (timeoutId) clearTimeout(timeoutId); // Clear timeout on unmount
+      if (timeoutId) clearTimeout(timeoutId); // Clear debounce timeout on unmount
+      clearTimeout(initialDrawTimeoutId); // Clear initial draw timeout on unmount
     };
-  }, [isMobile, projects]);
+  }, [isMobile, projects]); // Keep dependencies: redraw if mobile state or projects change
 
   useEffect(() => {
     const handleScroll = () => {
@@ -459,9 +481,9 @@ function App() {
             {/* Display submission status (outside conditional rendering) */}
             {formStatus && !isConfirming && <p className={`mt-4 text-center ${formStatus.includes('Failed') ? 'text-red-500' : 'text-green-500'}`}>{formStatus}</p>}
 
-          </div>
-        </div>
-      </section>
+          </div> {/* Closing tag for grid md:grid-cols-2 */}
+        </div> {/* Closing tag for max-w-4xl */}
+      </section> {/* Closing tag for Contact Section */}
 
       {selectedProject && (
         <ProjectModal
