@@ -2,7 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Scene } from './components/Scene';
 import { ProjectModal } from './components/ProjectModal';
-import { Github, Linkedin, Youtube, ExternalLink, ToggleLeft as Kaggle, Send, Mail, MapPin, Phone } from 'lucide-react';
+import { MLBackground } from './components/MLBackground';
+import { Github, Linkedin, Youtube, ExternalLink, Send, Mail, MapPin, Phone } from 'lucide-react';
 import walleImage from './assets/walle.png'; // Make sure this import is added
 
 function App() {
@@ -150,17 +151,17 @@ function App() {
     <div className="w-full min-h-screen bg-[#0a0a0a]">
       {/* Social Links */}
       <div className="fixed top-4 right-4 flex gap-4 z-50">
-        <a href="#" className="social-icon text-white hover:text-red-800">
+        <a href="https://www.linkedin.com/in/naga-venkata-sravan-kumar-narala-5bb5319b/" className="social-icon text-white hover:text-red-800">
           <Linkedin className="w-6 h-6" />
         </a>
-        <a href="#" className="social-icon text-white hover:text-red-800">
+        <a href="https://github.com/sravankumarnnv" className="social-icon text-white hover:text-red-800">
           <Github className="w-6 h-6" />
         </a>
-        <a href="#" className="social-icon text-white hover:text-red-800">
+        <a href="https://www.youtube.com/@SravanKumarnnv" className="social-icon text-white hover:text-red-800">
           <Youtube className="w-6 h-6" />
         </a>
-        <a href="#" className="social-icon text-white hover:text-red-800">
-          <Kaggle className="w-6 h-6" />
+        <a href="https://www.kaggle.com/sravankumarnnv" className="social-icon text-white hover:text-red-800">
+          <img src="/kaggle.png" alt="Kaggle" className="w-6 h-6" style={{ width: '24px', height: '24px' }} />
         </a>
       </div>
 
@@ -196,12 +197,19 @@ function App() {
 
       {/* Projects Section */}
       <section className="py-20 px-4 md:px-8 relative projects-bg">
-        <div className="max-w-4xl mx-auto text-center mb-16">
+        <div className="max-w-6xl mx-auto mb-16 relative z-10">
           <h2 className="text-4xl font-bold mb-4 text-red-800">Projects</h2>
-          <p className="text-gray-400">Showcasing my latest work and experiments</p>
+          <p className="text-gray-100">Showcasing my latest work and experiments</p>
         </div>
         
-        <div ref={containerRef} className="max-w-6xl mx-auto projects-container">
+        {/* ML Background - Reduced opacity for less dominance */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden z-0" style={{ opacity: 0.25 }}>
+          <Canvas camera={{ position: [0, 0, 5], fov: 50 }}>
+            <MLBackground />
+          </Canvas>
+        </div>
+        
+        <div ref={containerRef} className="max-w-6xl mx-auto projects-container relative z-10">
           <canvas id="connecting-lines" className="absolute top-0 left-0 w-full h-full pointer-events-none" />
           
           {projects.map((project, index) => (
