@@ -176,12 +176,21 @@ function App() {
             const currentRect = currentCard.getBoundingClientRect();
             const nextRect = nextCard.getBoundingClientRect();
 
-            const startX = index % 2 === 0 ? 
-              currentRect.right - containerRect.left : 
-              currentRect.left - containerRect.left;
-            const endX = index % 2 === 0 ? 
-              nextRect.left - containerRect.left : 
-              nextRect.right - containerRect.left;
+            let startX, endX;
+
+            if (isMobile) {
+              // On mobile, cards are centered, connect centers vertically
+              startX = currentRect.left + currentRect.width / 2 - containerRect.left;
+              endX = nextRect.left + nextRect.width / 2 - containerRect.left;
+            } else {
+              // Original logic for desktop (alternating sides)
+              startX = index % 2 === 0 ? 
+                currentRect.right - containerRect.left : 
+                currentRect.left - containerRect.left;
+              endX = index % 2 === 0 ? 
+                nextRect.left - containerRect.left : 
+                nextRect.right - containerRect.left;
+            }
             
             const startY = currentRect.top + (currentRect.height / 2) - containerRect.top;
             const endY = nextRect.top + (nextRect.height / 2) - containerRect.top;
@@ -195,24 +204,23 @@ function App() {
       });
     };
 
-    if (isMobile) {
-      const canvas = document.getElementById('connecting-lines') as HTMLCanvasElement;
-      if (canvas) {
-        const ctx = canvas.getContext('2d');
-        ctx?.clearRect(0, 0, canvas.width, canvas.height);
-      }
-      return;
-    }
+    // Debounce or throttle the drawing function for performance
+    let timeoutId: number | null = null;
+    const debouncedDraw = () => {
+      if (timeoutId) clearTimeout(timeoutId);
+      timeoutId = window.setTimeout(drawConnectingLines, 50); // Adjust delay as needed
+    };
 
-    drawConnectingLines();
-    window.addEventListener('resize', drawConnectingLines);
-    window.addEventListener('scroll', drawConnectingLines);
+    debouncedDraw(); // Initial draw
+    window.addEventListener('resize', debouncedDraw);
+    window.addEventListener('scroll', debouncedDraw);
 
     return () => {
-      window.removeEventListener('resize', drawConnectingLines);
-      window.removeEventListener('scroll', drawConnectingLines);
+      window.removeEventListener('resize', debouncedDraw);
+      window.removeEventListener('scroll', debouncedDraw);
+      if (timeoutId) clearTimeout(timeoutId); // Clear timeout on unmount
     };
-  }, [isMobile]);
+  }, [isMobile, projects]);
 
   useEffect(() => {
     const handleScroll = () => {

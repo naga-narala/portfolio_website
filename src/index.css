@@ -280,9 +280,6 @@ canvas {
   .projects-container {
     padding: 0 10px; /* Reduce padding */
   }
-  #connecting-lines {
-     display: none; /* Hide connecting lines on mobile */
-  }
    .projects-bg { /* Simplify background */
     background: linear-gradient(180deg, #0a0a0a 0%, #1a0404 100%);
   }
