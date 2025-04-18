@@ -202,9 +202,10 @@ function App() {
           <p className="text-gray-100">Showcasing my latest work and experiments</p>
         </div>
         
-        {/* ML Background - Reduced opacity for less dominance */}
+        {/* ML Background */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden z-0" style={{ opacity: 0.25 }}>
-          <Canvas camera={{ position: [0, 0, 5], fov: 50 }}>
+          {/* Adjusted camera z-position slightly */}
+          <Canvas camera={{ position: [0, 0, 5.0], fov: 60 }}> {/* Changed z from 5.2 back to 5.0 */}
             <MLBackground />
           </Canvas>
         </div>

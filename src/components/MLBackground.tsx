@@ -1,80 +1,76 @@
-import React, { useRef, useMemo } from 'react';
+import React, { useRef, useMemo, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
-import { InstancedMesh, Matrix4 } from 'three';
+import { InstancedMesh, Matrix4, Vector3, Color, LineBasicMaterial, MeshStandardMaterial, BufferAttribute } from 'three';
 
 export function MLBackground() {
   const spheresRef = useRef<InstancedMesh>(null);
   const linesRef = useRef<THREE.LineSegments>(null);
+  const groupRef = useRef<THREE.Group>(null);
+  const sphereMaterialRef = useRef<MeshStandardMaterial>(null);
+  const lineMaterialRef = useRef<LineBasicMaterial>(null);
+  const linePositionAttributeRef = useRef<BufferAttribute | null>(null);
 
-  // Generate neural network nodes in a structured layout
   const { nodes, indices, count } = useMemo(() => {
-    const nodeCount = 50; // Total nodes
+    const columns = 3;
+    const nodesPerColumn = 20;
+    const nodeCount = columns * nodesPerColumn;
+
     const positions = new Float32Array(nodeCount * 3);
     const colors = new Float32Array(nodeCount * 3);
     const sizes = new Float32Array(nodeCount);
     const connections: number[] = [];
-    
-    // Create neural network layers
-    const layers = [10, 16, 10, 8]; // Nodes per layer
-    const layerDistance = 3.0; // Distance between layers
+
+    const columnSpacing = 4.0;
+    const verticalSpread = 14.0;
+
     let nodeIndex = 0;
-    
-    // Create nodes for each layer
-    for (let layer = 0; layer < layers.length; layer++) {
-      const nodeCountInLayer = layers[layer];
-      const layerX = (layer - 1.5) * layerDistance; // Center the network
-      
-      // Create nodes in current layer
-      for (let i = 0; i < nodeCountInLayer; i++) {
-        // Position nodes in a grid pattern
-        const ySpacing = 4.0 / Math.max(nodeCountInLayer - 1, 1);
-        const y = i * ySpacing - 2.0; // Center vertically
-        
-        // Add randomness for natural look - reduced jitter to ensure better alignment
-        const jitterX = (Math.random() - 0.5) * 0.1;
-        const jitterY = (Math.random() - 0.5) * 0.1;
-        const jitterZ = (Math.random() - 0.5) * 0.1;
-        
-        // Set position
-        positions[nodeIndex * 3] = layerX + jitterX;
-        positions[nodeIndex * 3 + 1] = y + jitterY;
-        positions[nodeIndex * 3 + 2] = -5 + jitterZ; // Push back in Z
-        
-        // Set color - Red with variations
-        colors[nodeIndex * 3] = 0.6 + Math.random() * 0.3; // Red
-        colors[nodeIndex * 3 + 1] = 0.0 + Math.random() * 0.1; // Almost no green
-        colors[nodeIndex * 3 + 2] = 0.0 + Math.random() * 0.1; // Almost no blue
-        
-        // Vary node sizes
-        sizes[nodeIndex] = 0.1 + Math.random() * 0.1;
-        
+
+    for (let col = 0; col < columns; col++) {
+      const colX = (col - 1) * columnSpacing;
+
+      for (let i = 0; i < nodesPerColumn; i++) {
+        const verticalPosition = (i / (nodesPerColumn - 1)) * verticalSpread - (verticalSpread / 2);
+
+        const jitterX = (Math.random() - 0.5) * 0.5;
+        const jitterY = (Math.random() - 0.5) * 0.3;
+        const jitterZ = (Math.random() - 0.5) * 0.8;
+
+        positions[nodeIndex * 3] = colX + jitterX;
+        positions[nodeIndex * 3 + 1] = verticalPosition + jitterY;
+        positions[nodeIndex * 3 + 2] = -2 + jitterZ;
+
+        colors[nodeIndex * 3] = 0.6 + Math.random() * 0.3;
+        colors[nodeIndex * 3 + 1] = 0.0 + Math.random() * 0.1;
+        colors[nodeIndex * 3 + 2] = 0.0 + Math.random() * 0.1;
+
+        sizes[nodeIndex] = 0.25 + Math.random() * 0.08;
+
         nodeIndex++;
       }
-      
-      // Connect to next layer
-      if (layer < layers.length - 1) {
-        const startIdx = nodeIndex - layers[layer];
-        const endIdx = nodeIndex;
-        const nextLayerStart = endIdx;
-        const nextLayerEnd = nextLayerStart + layers[layer + 1];
-        
-        // Create connections between current and next layer
-        for (let i = startIdx; i < endIdx; i++) {
-          // Each node connects to 2-3 nodes in the next layer
-          const connectionCount = 2 + Math.floor(Math.random() * 2);
-          
-          for (let c = 0; c < connectionCount; c++) {
-            // Pick a random node in the next layer
-            const targetIdx = nextLayerStart + Math.floor(Math.random() * layers[layer + 1]);
-            
-            // Add the connection indices
-            connections.push(i, targetIdx);
-          }
+    }
+
+    for (let col = 0; col < columns - 1; col++) {
+      const currentColStart = col * nodesPerColumn;
+      const nextColStart = (col + 1) * nodesPerColumn;
+
+      for (let i = 0; i < nodesPerColumn; i++) {
+        const sourceNodeIdx = currentColStart + i;
+
+        const connectionCount = 3 + Math.floor(Math.random() * 2);
+
+        for (let c = 0; c < connectionCount; c++) {
+          const offset = Math.floor(Math.random() * 5) - 2;
+          let targetNodePos = i + offset;
+
+          targetNodePos = Math.max(0, Math.min(nodesPerColumn - 1, targetNodePos));
+
+          const targetNodeIdx = nextColStart + targetNodePos;
+          connections.push(sourceNodeIdx, targetNodeIdx);
         }
       }
     }
-    
+
     return {
       nodes: {
         positions,
@@ -86,75 +82,116 @@ export function MLBackground() {
     };
   }, []);
 
-  // Set up instance matrices on first render
   const dummy = useMemo(() => new Matrix4(), []);
+  const basePositions = useMemo(() => {
+    const positions: Vector3[] = [];
+    for (let i = 0; i < count; i++) {
+      positions.push(new Vector3(nodes.positions[i * 3], nodes.positions[i * 3 + 1], nodes.positions[i * 3 + 2]));
+    }
+    return positions;
+  }, [count, nodes.positions]);
+  const baseSizes = useMemo(() => nodes.sizes, [nodes.sizes]);
 
-  // Set up sphere instances
-  React.useLayoutEffect(() => {
+  useEffect(() => {
     if (spheresRef.current) {
-      // Create a matrix for each sphere position
       for (let i = 0; i < count; i++) {
         const x = nodes.positions[i * 3];
         const y = nodes.positions[i * 3 + 1];
         const z = nodes.positions[i * 3 + 2];
         const size = nodes.sizes[i];
-        
-        // Create color for this instance
+
         spheresRef.current.setColorAt(
-          i, 
+          i,
           new THREE.Color(
-            nodes.colors[i * 3], 
-            nodes.colors[i * 3 + 1], 
+            nodes.colors[i * 3],
+            nodes.colors[i * 3 + 1],
             nodes.colors[i * 3 + 2]
           )
         );
-        
-        // Position and scale the sphere
+
         dummy.makeTranslation(x, y, z);
         dummy.scale(new THREE.Vector3(size, size, size));
         spheresRef.current.setMatrixAt(i, dummy);
       }
-      
+
       spheresRef.current.instanceMatrix.needsUpdate = true;
-      if (spheresRef.current.instanceColor) 
+      if (spheresRef.current.instanceColor)
         spheresRef.current.instanceColor.needsUpdate = true;
     }
-  }, [count, dummy, nodes]);
+
+    if (linesRef.current) {
+      const geometry = linesRef.current.geometry as THREE.BufferGeometry;
+      if (geometry && geometry.attributes.position) {
+        linePositionAttributeRef.current = geometry.attributes.position as BufferAttribute;
+      }
+    }
+  }, [count, dummy, nodes, basePositions, baseSizes]);
 
   useFrame(({ clock }) => {
-    const t = clock.getElapsedTime() * 0.2;
-    
-    // Animate nodes
-    if (spheresRef.current) {
-      spheresRef.current.rotation.y = Math.sin(t * 0.2) * 0.1;
+    const t = clock.getElapsedTime();
+    const slowTime = t * 0.15;
+    const pulseTime = t * 0.8;
+    const moveTime = t * 0.5;
+
+    if (groupRef.current) {
+      groupRef.current.rotation.y = Math.sin(slowTime * 0.08) * 0.12;
+      groupRef.current.position.y = Math.sin(slowTime * 0.06) * 0.25;
     }
-    
-    // Animate connections
-    if (linesRef.current) {
-      linesRef.current.rotation.y = Math.sin(t * 0.2) * 0.1;
+
+    if (spheresRef.current && sphereMaterialRef.current && linePositionAttributeRef.current) {
+      const pulseFactor = 0.05;
+      const baseScale = 1.0;
+      const moveAmount = 0.1;
+      const linePositions = linePositionAttributeRef.current.array as Float32Array;
+
+      for (let i = 0; i < count; i++) {
+        const pulse = Math.sin(pulseTime + i * 0.5) * pulseFactor + baseScale;
+        const size = baseSizes[i] * pulse;
+
+        const offsetX = Math.sin(moveTime + i * 0.8) * moveAmount;
+        const offsetY = Math.cos(moveTime + i * 0.6) * moveAmount;
+
+        const currentPosition = basePositions[i].clone();
+        currentPosition.x += offsetX;
+        currentPosition.y += offsetY;
+
+        dummy.makeScale(size, size, size);
+        dummy.setPosition(currentPosition);
+        spheresRef.current.setMatrixAt(i, dummy);
+
+        linePositions[i * 3] = currentPosition.x;
+        linePositions[i * 3 + 1] = currentPosition.y;
+        linePositions[i * 3 + 2] = currentPosition.z;
+      }
+      spheresRef.current.instanceMatrix.needsUpdate = true;
+      linePositionAttributeRef.current.needsUpdate = true;
+
+      sphereMaterialRef.current.emissiveIntensity = 0.3 + Math.sin(pulseTime * 0.7) * 0.2;
+    }
+
+    if (linesRef.current && lineMaterialRef.current) {
+      lineMaterialRef.current.opacity = 0.5 + Math.sin(pulseTime * 0.5) * 0.2;
     }
   });
 
   return (
-    <>
+    <group ref={groupRef} scale={[1.0, 1.0, 1.0]}>
       <ambientLight intensity={0.4} />
       <directionalLight position={[0, 0, 5]} intensity={0.5} />
 
-      {/* Neural Network Nodes as 3D Spheres */}
-      <instancedMesh 
-        ref={spheresRef} 
+      <instancedMesh
+        ref={spheresRef}
         args={[undefined, undefined, count]}
       >
-        <sphereGeometry args={[0.1, 16, 16]} />
-        <meshStandardMaterial 
-          metalness={0.2} 
-          roughness={0.3}
+        <sphereGeometry args={[0.24, 16, 16]} />
+        <meshStandardMaterial
+          ref={sphereMaterialRef}
+          metalness={0.3}
+          roughness={0.2}
           emissive="#8B0000"
-          emissiveIntensity={0.2}
         />
       </instancedMesh>
 
-      {/* Neural Network Connections */}
       <lineSegments ref={linesRef}>
         <bufferGeometry>
           <bufferAttribute
@@ -170,8 +207,14 @@ export function MLBackground() {
             itemSize={1}
           />
         </bufferGeometry>
-        <lineBasicMaterial color="#8B0000" opacity={0.4} transparent />
+        <lineBasicMaterial
+          ref={lineMaterialRef}
+          color="#ffaaaa"
+          transparent
+          toneMapped={false}
+          fog={false}
+        />
       </lineSegments>
-    </>
+    </group>
   );
 }
