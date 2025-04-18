@@ -1,0 +1,201 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-red: #8B0000;
+  --dark-red: #4A0404;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  background: #0a0a0a;
+  color: #ffffff;
+}
+
+canvas {
+  touch-action: none;
+}
+
+.projects-bg {
+  background: 
+    radial-gradient(circle at 10% 20%, rgba(139, 0, 0, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 90% 80%, rgba(74, 4, 4, 0.1) 0%, transparent 50%),
+    linear-gradient(180deg, #0a0a0a 0%, #1a0404 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.projects-bg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--primary-red), transparent);
+}
+
+.projects-bg::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--primary-red), transparent);
+}
+
+.project-card {
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.6s ease-out;
+  width: 400px;
+  position: relative;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  box-shadow: 
+    0 4px 6px -1px rgba(139, 0, 0, 0.1),
+    0 2px 4px -1px rgba(139, 0, 0, 0.06),
+    0 8px 24px -4px rgba(139, 0, 0, 0.1);
+}
+
+.project-card::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(45deg, #8B0000, #4A0404);
+  border-radius: 8px;
+  z-index: -1;
+  transform: translateZ(-1px);
+}
+
+.project-card.visible {
+  transform: translateY(0) rotateX(10deg);
+  opacity: 1;
+}
+
+.project-card:hover {
+  transform: translateY(-5px) rotateX(0deg);
+  box-shadow: 
+    0 10px 30px -5px rgba(139, 0, 0, 0.2),
+    0 20px 40px -10px rgba(139, 0, 0, 0.1);
+}
+
+.project-card:nth-child(odd) {
+  margin-right: auto;
+  margin-left: 0;
+}
+
+.project-card:nth-child(even) {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.social-icon {
+  transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+  transform: translateY(-2px);
+  color: var(--primary-red);
+}
+
+.profile-circle {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 4px solid var(--primary-red);
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.projects-container {
+  position: relative;
+  padding: 0 20px;
+}
+
+#connecting-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.glowing-border {
+  position: relative;
+}
+
+.glowing-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 2px;
+  border-radius: 8px;
+  background: linear-gradient(45deg, #8B0000, #4A0404);
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.stat-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  background: rgba(139, 0, 0, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(139, 0, 0, 0.2);
+}
+
+.contact-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: rgba(139, 0, 0, 0.1);
+  border: 1px solid rgba(139, 0, 0, 0.2);
+  border-radius: 8px;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.contact-input:focus {
+  outline: none;
+  border-color: var(--primary-red);
+  box-shadow: 0 0 0 2px rgba(139, 0, 0, 0.2);
+}
+
+.contact-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(139, 0, 0, 0.1);
+  border-radius: 50%;
+  color: var(--primary-red);
+}
+
+.submit-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  background: var(--primary-red);
+  color: white;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background: var(--dark-red);
+  transform: translateY(-2px);
+}
