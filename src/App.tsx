@@ -3,6 +3,7 @@ import { Canvas } from '@react-three/fiber';
 import { Scene } from './components/Scene';
 import { ProjectModal } from './components/ProjectModal';
 import { Github, Linkedin, Youtube, ExternalLink, ToggleLeft as Kaggle, Send, Mail, MapPin, Phone } from 'lucide-react';
+import walleImage from './assets/walle.png'; // Make sure this import is added
 
 function App() {
   const [formData, setFormData] = useState({
@@ -164,33 +165,29 @@ function App() {
       </div>
 
       {/* About Section */}
-      <section className="py-20 px-4 md:px-8 bg-gradient-to-b from-[#0a0a0a] to-[#1a0404]">
-        <div className="max-w-4xl mx-auto">
-          <div className="glowing-border p-8 rounded-lg bg-[#1a0404]/50 backdrop-blur-sm">
-            <h2 className="text-4xl font-bold mb-8 text-red-800">About me</h2>
-            <div className="flex flex-col md:flex-row items-center gap-8">
+      <section className="py-24 px-6 md:px-12 lg:px-24 bg-gradient-to-b from-[#0a0a0a] to-[#1a0404]">
+        <div className="max-w-6xl mx-auto">
+          <div className="glowing-border p-10 rounded-lg bg-[#1a0404]/50 backdrop-blur-sm">
+            <h2 className="text-5xl font-bold mb-10 text-red-800">Naga Narala</h2>
+            <div className="flex flex-col md:flex-row items-center gap-12">
               <div className="flex-1">
-                <p className="text-gray-400 mb-4">
-                  Creative developer passionate about building innovative digital experiences
-                  with modern web technologies and 3D graphics.
+                <p className="text-gray-300 mb-6 text-xl leading-relaxed">
+                  Currently pursuing a Master of Artificial Intelligence at Monash University.
+                  Special interest in Computer Vision and experienced in Machine Learning and Deep Learning projects.
                 </p>
-                <div className="flex gap-4 mt-6">
-                  <div className="stat-box">
-                    <span className="text-2xl font-bold text-red-500">5+</span>
-                    <span className="text-sm text-gray-400">Years Experience</span>
-                  </div>
-                  <div className="stat-box">
-                    <span className="text-2xl font-bold text-red-500">50+</span>
-                    <span className="text-sm text-gray-400">Projects</span>
-                  </div>
-                  <div className="stat-box">
-                    <span className="text-2xl font-bold text-red-500">20+</span>
-                    <span className="text-sm text-gray-400">Clients</span>
+                <div className="flex gap-6 mt-8">
+                  <div className="stat-box p-4">
+                    <span className="text-3xl font-bold text-red-500">5+</span>
+                    <span className="text-base text-gray-300">Projects</span>
                   </div>
                 </div>
               </div>
-              <div className="profile-circle bg-gray-800">
-                <div className="w-full h-full bg-gray-700"></div>
+              <div className="profile-circle bg-gray-800 overflow-hidden w-60 h-60">
+                <img 
+                  src={walleImage} 
+                  alt="Profile Picture" 
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
           </div>
