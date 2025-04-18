@@ -1,36 +1,14 @@
 import React, { useRef, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
-
-// Create a circular point texture
-const createCircleTexture = () => {
-  const size = 64;
-  const canvas = document.createElement('canvas');
-  canvas.width = size;
-  canvas.height = size;
-  const context = canvas.getContext('2d');
-  
-  if (context) {
-    context.beginPath();
-    context.arc(size / 2, size / 2, size / 2, 0, 2 * Math.PI);
-    context.fillStyle = 'white';
-    context.fill();
-  }
-  
-  const texture = new THREE.CanvasTexture(canvas);
-  texture.needsUpdate = true;
-  return texture;
-};
+import { InstancedMesh, Matrix4 } from 'three';
 
 export function MLBackground() {
-  const pointsRef = useRef<THREE.Points>(null);
+  const spheresRef = useRef<InstancedMesh>(null);
   const linesRef = useRef<THREE.LineSegments>(null);
 
-  // Create point texture once
-  const pointTexture = useMemo(() => createCircleTexture(), []);
-
   // Generate neural network nodes in a structured layout
-  const { nodes, indices } = useMemo(() => {
+  const { nodes, indices, count } = useMemo(() => {
     const nodeCount = 50; // Total nodes
     const positions = new Float32Array(nodeCount * 3);
     const colors = new Float32Array(nodeCount * 3);
@@ -53,10 +31,10 @@ export function MLBackground() {
         const ySpacing = 4.0 / Math.max(nodeCountInLayer - 1, 1);
         const y = i * ySpacing - 2.0; // Center vertically
         
-        // Add randomness for natural look
-        const jitterX = (Math.random() - 0.5) * 0.3;
-        const jitterY = (Math.random() - 0.5) * 0.3;
-        const jitterZ = (Math.random() - 0.5) * 0.3;
+        // Add randomness for natural look - reduced jitter to ensure better alignment
+        const jitterX = (Math.random() - 0.5) * 0.1;
+        const jitterY = (Math.random() - 0.5) * 0.1;
+        const jitterZ = (Math.random() - 0.5) * 0.1;
         
         // Set position
         positions[nodeIndex * 3] = layerX + jitterX;
@@ -103,16 +81,52 @@ export function MLBackground() {
         colors,
         sizes
       },
-      indices: new Uint16Array(connections)
+      indices: new Uint16Array(connections),
+      count: nodeCount
     };
   }, []);
+
+  // Set up instance matrices on first render
+  const dummy = useMemo(() => new Matrix4(), []);
+
+  // Set up sphere instances
+  React.useLayoutEffect(() => {
+    if (spheresRef.current) {
+      // Create a matrix for each sphere position
+      for (let i = 0; i < count; i++) {
+        const x = nodes.positions[i * 3];
+        const y = nodes.positions[i * 3 + 1];
+        const z = nodes.positions[i * 3 + 2];
+        const size = nodes.sizes[i];
+        
+        // Create color for this instance
+        spheresRef.current.setColorAt(
+          i, 
+          new THREE.Color(
+            nodes.colors[i * 3], 
+            nodes.colors[i * 3 + 1], 
+            nodes.colors[i * 3 + 2]
+          )
+        );
+        
+        // Position and scale the sphere
+        dummy.makeTranslation(x, y, z);
+        dummy.scale(new THREE.Vector3(size, size, size));
+        spheresRef.current.setMatrixAt(i, dummy);
+      }
+      
+      spheresRef.current.instanceMatrix.needsUpdate = true;
+      if (spheresRef.current.instanceColor) 
+        spheresRef.current.instanceColor.needsUpdate = true;
+    }
+  }, [count, dummy, nodes]);
 
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime() * 0.2;
     
     // Animate nodes
-    if (pointsRef.current) {
-      pointsRef.current.rotation.y = Math.sin(t * 0.2) * 0.1;
+    if (spheresRef.current) {
+      spheresRef.current.rotation.y = Math.sin(t * 0.2) * 0.1;
     }
     
     // Animate connections
@@ -126,36 +140,19 @@ export function MLBackground() {
       <ambientLight intensity={0.4} />
       <directionalLight position={[0, 0, 5]} intensity={0.5} />
 
-      {/* Neural Network Nodes */}
-      <points ref={pointsRef}>
-        <bufferGeometry>
-          <bufferAttribute
-            attach="attributes-position"
-            count={nodes.positions.length / 3}
-            array={nodes.positions}
-            itemSize={3}
-          />
-          <bufferAttribute
-            attach="attributes-color"
-            count={nodes.colors.length / 3}
-            array={nodes.colors}
-            itemSize={3}
-          />
-          <bufferAttribute
-            attach="attributes-size"
-            count={nodes.sizes.length}
-            array={nodes.sizes}
-            itemSize={1}
-          />
-        </bufferGeometry>
-        <pointsMaterial
-          size={0.2}
-          vertexColors
-          transparent
-          opacity={0.85}
-          sizeAttenuation
+      {/* Neural Network Nodes as 3D Spheres */}
+      <instancedMesh 
+        ref={spheresRef} 
+        args={[undefined, undefined, count]}
+      >
+        <sphereGeometry args={[0.1, 16, 16]} />
+        <meshStandardMaterial 
+          metalness={0.2} 
+          roughness={0.3}
+          emissive="#8B0000"
+          emissiveIntensity={0.2}
         />
-      </points>
+      </instancedMesh>
 
       {/* Neural Network Connections */}
       <lineSegments ref={linesRef}>
