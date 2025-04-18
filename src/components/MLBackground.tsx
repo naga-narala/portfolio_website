@@ -3,7 +3,12 @@ import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { InstancedMesh, Matrix4, Vector3, Color, LineBasicMaterial, MeshStandardMaterial, BufferAttribute } from 'three';
 
-export function MLBackground() {
+// Add scale prop
+interface MLBackgroundProps {
+  scale?: number | [number, number, number];
+}
+
+export function MLBackground({ scale = 1.0 }: MLBackgroundProps) { // Destructure scale prop with default
   const spheresRef = useRef<InstancedMesh>(null);
   const linesRef = useRef<THREE.LineSegments>(null);
   const groupRef = useRef<THREE.Group>(null);
@@ -175,7 +180,8 @@ export function MLBackground() {
   });
 
   return (
-    <group ref={groupRef} scale={[1.0, 1.0, 1.0]}>
+    // Apply the scale prop to the group
+    <group ref={groupRef} scale={scale}>
       <ambientLight intensity={0.4} />
       <directionalLight position={[0, 0, 5]} intensity={0.5} />
 
@@ -209,7 +215,7 @@ export function MLBackground() {
         </bufferGeometry>
         <lineBasicMaterial
           ref={lineMaterialRef}
-          color="#ffaaaa"
+          color="#cc5555"
           transparent
           toneMapped={false}
           fog={false}
