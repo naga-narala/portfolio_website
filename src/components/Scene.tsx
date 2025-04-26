@@ -19,12 +19,12 @@ export function Scene() {
   return (
     <>
       <ambientLight intensity={0.3} />
-      <directionalLight position={[5, 5, 5]} intensity={0.8} color="#ff4444" />
-      <pointLight position={[-5, -5, -5]} intensity={0.5} color="#8B0000" />
+      <directionalLight position={[5, 5, 5]} intensity={0.8} color="#563D7C" />
+      <pointLight position={[-5, -5, -5]} intensity={0.5} color="#44B78B" />
       
       <Box ref={boxRef} args={[3, 1, 1]} position={[0, 0, 0]}>
         <MeshDistortMaterial
-          color="#8B0000"
+          color="#563D7C"
           roughness={0.3}
           metalness={0.8}
           distort={0.2}

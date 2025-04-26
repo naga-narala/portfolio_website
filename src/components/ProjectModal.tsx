@@ -26,16 +26,16 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
 
   return (
     <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4 overflow-y-auto">
-      <div className="bg-[#1a0404] rounded-lg max-w-3xl w-full relative overflow-hidden my-8">
+      <div className="bg-[#F8F9FA] rounded-lg max-w-3xl w-full relative overflow-hidden my-8 shadow-lg shadow-purple-500/20">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-white z-10"
+          className="absolute top-4 right-4 text-gray-600 hover:text-[#563D7C] z-10"
         >
           <X className="w-6 h-6" />
         </button>
 
         <div className="p-6">
-          <h2 className="text-3xl font-bold text-red-500 mb-4">{project.title}</h2>
+          <h2 className="text-3xl font-bold text-[#563D7C] mb-4">{project.title}</h2>
 
           {!showQuestionForm && (
             <div className="aspect-video mb-6">
@@ -54,7 +54,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
           )}
 
           {!showQuestionForm && (
-            <p className="text-gray-400 mb-6">{project.description}</p>
+            <p className="text-[#2D2D2D] mb-6">{project.description}</p>
           )}
 
           {!showQuestionForm && (
@@ -63,7 +63,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                 href={project.githubLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 py-2 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors text-white"
+                className="flex items-center gap-2 px-4 py-2 bg-[#563D7C] rounded-lg hover:bg-[#8C6BC8] transition-colors text-white"
               >
                 <Github className="w-5 h-5" />
                 <span>GitHub</span>
@@ -72,14 +72,14 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                 href={project.kaggleLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 py-2 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors text-white"
+                className="flex items-center gap-2 px-4 py-2 bg-[#44B78B] rounded-lg hover:bg-[#44B78B]/80 transition-colors text-white"
               >
                 <Kaggle className="w-5 h-5" />
                 <span>Kaggle</span>
               </a>
               <button
                 onClick={() => setShowQuestionForm(true)}
-                className="flex items-center gap-2 px-4 py-2 bg-blue-800 rounded-lg hover:bg-blue-700 transition-colors text-white"
+                className="flex items-center gap-2 px-4 py-2 bg-[#8C6BC8] rounded-lg hover:bg-[#8C6BC8]/80 transition-colors text-white"
               >
                 <HelpCircle className="w-5 h-5" />
                 <span>Ask a Question</span>
@@ -90,8 +90,8 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
           {showQuestionForm && (
             <div className="mt-6">
               <div className="flex justify-between items-center mb-4">
-                <h3 className="text-2xl font-semibold text-red-400">Ask a Question about {project.title}</h3>
-                <button onClick={() => setShowQuestionForm(false)} className="text-gray-400 hover:text-white">
+                <h3 className="text-2xl font-semibold text-[#563D7C]">Ask a Question about {project.title}</h3>
+                <button onClick={() => setShowQuestionForm(false)} className="text-gray-600 hover:text-[#563D7C]">
                   <X className="w-5 h-5" />
                 </button>
               </div>
@@ -130,7 +130,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                   Review & Submit
                   <Send className="w-4 h-4 ml-2" />
                 </button>
-                {questionFormStatus && <p className="mt-2 text-sm text-green-500">{questionFormStatus}</p>}
+                {questionFormStatus && <p className="mt-2 text-sm text-green-600">{questionFormStatus}</p>}
               </form>
             </div>
           )}
