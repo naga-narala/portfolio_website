@@ -64,6 +64,14 @@ Ensure you have the following installed on your system:
 
 2. Open your browser and navigate to the URL provided in the terminal (e.g., `http://localhost:4000`).
 
+### Exposing the Development Server to the Network
+
+If you want to access the development server from other devices on the same network, use the following command:
+```bash
+npm run dev -- --host
+```
+This will expose the server to the network, and you can access it using your machine's IP address (e.g., `http://192.168.x.x:4000`).
+
 ### Building for Production
 
 To create an optimized production build:
