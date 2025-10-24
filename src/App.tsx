@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import { Canvas } from '@react-three/fiber';
 import emailjs from '@emailjs/browser';
 import { ProjectModal } from './components/ProjectModal';
@@ -87,7 +87,7 @@ function App() {
   const projectsSectionRef = useRef<HTMLElement>(null);
   const contactSectionRef = useRef<HTMLElement>(null);
 
-  const projects: ProjectType[] = [
+  const projects: ProjectType[] = useMemo(() => [
     {
       title: "Project 1",
       description: "A revolutionary AI-powered platform that transforms how we interact with data",
@@ -128,7 +128,7 @@ function App() {
       githubLink: "https://github.com/username/project5",
       kaggleLink: "https://kaggle.com/username/project5"
     }
-  ];
+  ], []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
