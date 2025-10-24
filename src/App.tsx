@@ -363,7 +363,7 @@ function App() {
 
       {/* Social Links */}
       <div 
-        className={`fixed top-24 right-4 md:right-8 flex flex-col gap-4 md:gap-6 z-40 p-2 rounded-lg transition-all duration-300 ${
+        className={`fixed top-24 right-4 md:right-8 flex flex-col gap-4 md:gap-6 z-40 p-2 rounded-lg transition-all duration-300 hidden md:flex ${
           isScrolled ? 'opacity-100' : 'opacity-0'
         }`}
       >
