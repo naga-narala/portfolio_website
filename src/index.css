@@ -111,47 +111,83 @@ canvas {
 }
 
 .project-card {
-  width: 400px;
+  width: 550px;
+  min-height: 280px;
   position: relative;
   background-color: var(--white);
   box-shadow: 
     0 4px 20px -4px rgba(86, 61, 124, 0.15),
     0 8px 30px -8px rgba(86, 61, 124, 0.1);
-  border-radius: 12px;
-  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  border-radius: 16px;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .project-card::before {
   content: '';
   position: absolute;
-  inset: -2px;
-  background: linear-gradient(45deg, 
-    var(--primary-purple), 
-    var(--secondary-teal)
+  inset: 0;
+  background: linear-gradient(135deg, 
+    rgba(86, 61, 124, 0.08) 0%, 
+    rgba(140, 107, 200, 0.05) 50%,
+    rgba(68, 183, 139, 0.08) 100%
   );
   border-radius: 12px;
-  z-index: -1;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  z-index: 1;
+}
+
+.project-card::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle,
+    rgba(140, 107, 200, 0.15) 0%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  z-index: 0;
 }
 
 .project-card:hover::before {
   opacity: 1;
 }
 
-.project-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 
-    0 10px 30px -5px rgba(86, 61, 124, 0.2),
-    0 20px 40px -10px rgba(86, 61, 124, 0.1);
+.project-card:hover::after {
+  opacity: 1;
+  transform: translate(25%, 25%) scale(1.2);
 }
 
-.project-card:hover h3,
-.project-card:hover p,
-.project-card:hover .flex-wrap span,
-.project-card:hover button {
+.project-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 
+    0 20px 60px -10px rgba(86, 61, 124, 0.35),
+    0 30px 80px -15px rgba(86, 61, 124, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(86, 61, 124, 0.2);
+}
+
+.project-card > * {
   position: relative;
   z-index: 2;
+}
+
+.project-card:hover h3 {
+  transform: translateX(4px);
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.project-card:hover button {
+  transform: translateX(6px);
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0.1s;
 }
 
 .project-card:nth-child(odd) {
@@ -323,6 +359,21 @@ canvas {
   transform: translateY(0);
 }
 
+/* Tech Tag Animations */
+.project-card .flex-wrap span {
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.project-card:hover .flex-wrap span {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(86, 61, 124, 0.15);
+}
+
+.project-card .flex-wrap span:hover {
+  transform: translateY(-4px) scale(1.05);
+  background: linear-gradient(135deg, rgba(86, 61, 124, 0.15), rgba(140, 107, 200, 0.15));
+}
+
 /* Improved Responsive Styles */
 @media (max-width: 768px) {
   /* Adjusting general padding for sections */
@@ -334,10 +385,11 @@ canvas {
   /* Adjust project cards and ensure proper visibility on smaller screens */
   .project-card {
     width: 90%;
-    max-width: 400px;
+    max-width: 500px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 3rem;
+    min-height: auto;
   }
   
   .project-card:nth-child(odd),
