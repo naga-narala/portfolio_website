@@ -74,7 +74,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
         <div className="p-8">
           <h2 className="text-3xl font-bold text-[#563D7C] mb-4">{project.title}</h2>
 
-          {!showQuestionForm && (
+          {!showQuestionForm && project.youtubeId && (
             <div className="aspect-video mb-6 rounded-lg overflow-hidden border border-gray-200 shadow-inner">
               <YouTube
                 videoId={project.youtubeId}
@@ -89,6 +89,20 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                   },
                 }}
               />
+            </div>
+          )}
+
+          {!showQuestionForm && !project.youtubeId && (
+            <div className="aspect-video mb-6 rounded-lg overflow-hidden border-2 border-dashed border-gray-300 bg-gradient-to-br from-[#F5F0FF] to-[#E8F5F1] flex items-center justify-center">
+              <div className="text-center px-6">
+                <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-white/80 flex items-center justify-center">
+                  <svg className="w-8 h-8 text-[#563D7C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <p className="text-[#563D7C] font-semibold">Demo Video Coming Soon</p>
+                <p className="text-sm text-gray-500 mt-1">Stay tuned for a detailed walkthrough</p>
+              </div>
             </div>
           )}
 
@@ -108,16 +122,18 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                 <span>GitHub</span>
                 <ExternalLink className="w-4 h-4 ml-1 opacity-70" />
               </a>
-              <a
-                href={project.kaggleLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-5 py-2.5 bg-[#44B78B] rounded-lg hover:bg-[#44B78B]/90 transition-all duration-200 text-white hover:shadow-lg hover:-translate-y-0.5"
-              >
-                <img src="/kaggle.svg" alt="Kaggle" className="w-5 h-5" />
-                <span>Kaggle</span>
-                <ExternalLink className="w-4 h-4 ml-1 opacity-70" />
-              </a>
+              {project.kaggleLink && (
+                <a
+                  href={project.kaggleLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-5 py-2.5 bg-[#44B78B] rounded-lg hover:bg-[#44B78B]/90 transition-all duration-200 text-white hover:shadow-lg hover:-translate-y-0.5"
+                >
+                  <img src="/kaggle.svg" alt="Kaggle" className="w-5 h-5" />
+                  <span>Kaggle</span>
+                  <ExternalLink className="w-4 h-4 ml-1 opacity-70" />
+                </a>
+              )}
               <button
                 onClick={() => setShowQuestionForm(true)}
                 className="flex items-center gap-2 px-5 py-2.5 bg-[#F5F0FF] border border-[#563D7C]/20 rounded-lg hover:bg-[#563D7C]/10 transition-all duration-200 text-[#563D7C]"

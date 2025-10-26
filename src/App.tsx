@@ -26,17 +26,17 @@ function useIntersectionObserver(options = {}) {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          setVisibleElements((prev) => [...prev, entry.target as HTMLElement]);
+          setVisibleElements((prev: HTMLElement[]) => [...prev, entry.target as HTMLElement]);
         }
       });
     }, options);
 
-    observedElements.forEach((element) => {
+    observedElements.forEach((element: HTMLElement) => {
       if (element) observer.observe(element);
     });
 
     return () => {
-      observedElements.forEach((element) => {
+      observedElements.forEach((element: HTMLElement) => {
         if (element) observer.unobserve(element);
       });
     };
@@ -89,12 +89,12 @@ function App() {
 
   const projects: ProjectType[] = useMemo(() => [
     {
-      title: "Project 1",
-      description: "A revolutionary AI-powered platform that transforms how we interact with data",
-      tech: ["React", "Three.js", "TensorFlow"],
-      youtubeId: "dQw4w9WgXcQ",
-      githubLink: "https://github.com/username/project1",
-      kaggleLink: "https://kaggle.com/username/project1"
+      title: "PulseLab - AI Health Analytics",
+      description: "Privacy-first health analytics platform that transforms Apple Health data into actionable insights using a 6-agent AI system. Each specialized agent analyzes cardiovascular, sleep, fitness, and medical metrics locally—no cloud storage, complete user control.",
+      tech: ["Python", "FastAPI", "React", "TypeScript", "SQLite", "AI Agents", "OpenRouter", "Docker"],
+      youtubeId: "",
+      githubLink: "https://github.com/naga-narala/PulseLab",
+      kaggleLink: ""
     },
     {
       title: "Project 2",
@@ -142,27 +142,27 @@ function App() {
     setIsConfirming(false); // Move away from confirmation view
 
     // Replace with your actual EmailJS Service ID, Template ID, and Public Key
-    const serviceID = 'YOUR_SERVICE_ID';
-    const templateID = 'YOUR_TEMPLATE_ID';
-    const publicKey = 'YOUR_PUBLIC_KEY';
+    const serviceID = 'service_portfolio';
+    const templateID = 'template_portfolio';
+    const publicKey = 'xsczH8T4uM7k9L2p0Q5w3e6r';
 
     // Ensure the template variables in EmailJS match these keys
     const templateParams = {
       from_name: formData.name,
       from_email: formData.email,
       message: formData.message,
-      to_email: 'gptstealer@gmail.com' // You can set this in the template or here
+      to_email: 'sravankumar.nnv@gmail.com'
     };
 
     emailjs.send(serviceID, templateID, templateParams, publicKey)
-      .then((response) => {
+      .then((response: { status: number; text: string }) => {
          console.log('SUCCESS!', response.status, response.text);
          setFormStatus('Message sent successfully!');
          // Clear the form
          setFormData({ name: '', email: '', message: '' });
          // Optionally hide status message after a delay
          setTimeout(() => setFormStatus(''), 5000);
-      }, (err) => {
+      }, (err: Error) => {
          console.error('FAILED...', err);
          setFormStatus('Failed to send message. Please try again.');
          // Optionally hide status message after a delay
@@ -205,7 +205,7 @@ function App() {
       // Check if we have any project refs before trying to draw lines
       if (projectsRef.current.length === 0) return;
 
-      projectsRef.current.forEach((ref, index) => {
+      projectsRef.current.forEach((ref: HTMLDivElement | null, index: number) => {
         if (index < projectsRef.current.length - 1) {
           const currentCard = ref;
           const nextCard = projectsRef.current[index + 1];
@@ -301,10 +301,10 @@ function App() {
     });
     
     if (containerRef.current) {
+      // Only observe the container's children, not the canvas
       observer.observe(containerRef.current, { 
         childList: true, 
-        subtree: true, 
-        attributes: true 
+        subtree: true
       });
     }
     
@@ -313,18 +313,14 @@ function App() {
     // Setup scroll handler
     window.addEventListener('scroll', drawConnectingLines);
     
-    // Redraw lines every 500ms for the first 5 seconds to ensure they're always visible
-    const intervalId = setInterval(drawConnectingLines, 500);
-    setTimeout(() => {
-      clearInterval(intervalId);
-    }, 5000);
+    // Draw lines once on mount and then only on scroll/resize
+    // Removed the interval that was causing continuous redraws
 
     return () => {
       window.removeEventListener('resize', drawConnectingLines);
       window.removeEventListener('scroll', drawConnectingLines);
       window.removeEventListener('load', ensureLines);
       observer.disconnect();
-      clearInterval(intervalId);
     };
   }, [isMobile, projects]);
 
@@ -363,17 +359,17 @@ function App() {
 
       {/* Social Links */}
       <div 
-        className={`fixed top-24 right-4 md:right-8 flex flex-col gap-4 md:gap-6 z-40 p-2 rounded-lg transition-all duration-300 ${
-          isScrolled ? 'opacity-100' : 'opacity-0'
+        className={`fixed top-32 right-4 md:right-8 flex flex-col gap-4 md:gap-6 z-40 p-3 rounded-lg bg-white/90 backdrop-blur-md shadow-lg border border-gray-200/30 transition-all duration-300 ${
+          isScrolled ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'
         }`}
       >
-        <a href="https://www.linkedin.com/in/naga-venkata-sravan-kumar-narala-5bb5319b/" target="_blank" rel="noopener noreferrer" className="social-icon text-[#563D7C] hover:text-[#8C6BC8]">
+        <a href="https://www.linkedin.com/in/naga-narala/" target="_blank" rel="noopener noreferrer" className="social-icon text-[#563D7C] hover:text-[#8C6BC8]">
           <Linkedin className="w-6 h-6" />
         </a>
-        <a href="https://github.com/sravankumarnnv" target="_blank" rel="noopener noreferrer" className="social-icon text-[#563D7C] hover:text-[#8C6BC8]">
+        <a href="https://github.com/naga-narala" target="_blank" rel="noopener noreferrer" className="social-icon text-[#563D7C] hover:text-[#8C6BC8]">
           <Github className="w-6 h-6" />
         </a>
-        <a href="https://www.youtube.com/@SravanKumarnnv" target="_blank" rel="noopener noreferrer" className="social-icon text-[#563D7C] hover:text-[#8C6BC8]">
+        <a href="https://www.youtube.com/@naga-narala" target="_blank" rel="noopener noreferrer" className="social-icon text-[#563D7C] hover:text-[#8C6BC8]">
           <Youtube className="w-6 h-6" />
         </a>
         <a href="https://www.kaggle.com/sravankumarnnv" target="_blank" rel="noopener noreferrer" className="social-icon text-[#563D7C] hover:text-[#8C6BC8]">
@@ -655,7 +651,7 @@ function App() {
                   <h3 className="text-[#563D7C] font-semibold text-lg mb-3">Connect</h3>
                   <div className="flex gap-4">
                     <a 
-                      href="https://www.linkedin.com/in/naga-venkata-sravan-kumar-narala-5bb5319b/" 
+                      href="https://www.linkedin.com/in/naga-narala/" 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="bg-[#F5F0FF] p-3 rounded-full text-[#563D7C] hover:bg-[#563D7C] hover:text-white transition-all"
@@ -663,7 +659,7 @@ function App() {
                       <Linkedin className="w-5 h-5" />
                     </a>
                     <a 
-                      href="https://github.com/sravankumarnnv" 
+                      href="https://github.com/naga-narala" 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="bg-[#F5F0FF] p-3 rounded-full text-[#563D7C] hover:bg-[#563D7C] hover:text-white transition-all"
