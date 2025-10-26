@@ -1,7 +1,9 @@
 {
-  "name": "vite-react-typescript-starter",
+  "name": "portfolio-website",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Personal portfolio website built with React, TypeScript, Three.js, and Tailwind CSS",
+  "author": "Naga Narala",
   "type": "module",
   "scripts": {
     "dev": "vite",
