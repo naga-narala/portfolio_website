@@ -113,20 +113,20 @@ function App() {
       kaggleLink: "https://kaggle.com/sravankumarnnv"
     },
     {
+      title: "RiverMind - Hydrological ML (In Progress)",
+      description: "Machine learning system for flood risk prediction and river health monitoring using 10M+ hydrological records. Multi-risk assessment covering water quality, flood events, drought conditions using XGBoost and LSTM models.",
+      tech: ["Python", "XGBoost", "LSTM", "Time Series Analysis", "Pandas", "Hydrological Data"],
+      youtubeId: "",
+      githubLink: "https://github.com/naga-narala/RiverMind",
+      kaggleLink: "https://kaggle.com/sravankumarnnv"
+    },
+    {
       title: "Birthday Automation - SAYS Charity",
       description: "Automated birthday greeting system for 400+ supporters with PhonePe UPI donation integration, personalized HTML email templates, and social media engagement tracking. Built with n8n workflow automation.",
       tech: ["n8n", "Node.js", "JavaScript", "Email Automation", "PhonePe API", "Workflow Design"],
       youtubeId: "",
       githubLink: "https://github.com/naga-narala/Birthday-Automation",
       kaggleLink: ""
-    },
-    {
-      title: "Project 5",
-      description: "Virtual reality experience for architectural visualization",
-      tech: ["Three.js", "WebXR", "Blender"],
-      youtubeId: "dQw4w9WgXcQ",
-      githubLink: "https://github.com/username/project5",
-      kaggleLink: "https://kaggle.com/username/project5"
     }
   ], []);
 
