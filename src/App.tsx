@@ -113,12 +113,12 @@ function App() {
       kaggleLink: "https://kaggle.com/sravankumarnnv"
     },
     {
-      title: "Project 4",
-      description: "Advanced animation system for interactive storytelling",
-      tech: ["GSAP", "React Three Fiber", "TypeScript"],
-      youtubeId: "dQw4w9WgXcQ",
-      githubLink: "https://github.com/username/project4",
-      kaggleLink: "https://kaggle.com/username/project4"
+      title: "Birthday Automation - SAYS Charity",
+      description: "Automated birthday greeting system for 400+ supporters with PhonePe UPI donation integration, personalized HTML email templates, and social media engagement tracking. Built with n8n workflow automation.",
+      tech: ["n8n", "Node.js", "JavaScript", "Email Automation", "PhonePe API", "Workflow Design"],
+      youtubeId: "",
+      githubLink: "https://github.com/naga-narala/Birthday-Automation",
+      kaggleLink: ""
     },
     {
       title: "Project 5",
