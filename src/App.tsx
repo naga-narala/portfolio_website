@@ -97,12 +97,12 @@ function App() {
       kaggleLink: ""
     },
     {
-      title: "Project 2",
-      description: "Immersive 3D visualization tool for complex datasets",
-      tech: ["WebGL", "D3.js", "Node.js"],
-      youtubeId: "dQw4w9WgXcQ",
-      githubLink: "https://github.com/username/project2",
-      kaggleLink: "https://kaggle.com/username/project2"
+      title: "RipCatch - AI Beach Safety System",
+      description: "AI-powered rip current detection system using YOLOv8 computer vision to enhance beach safety and save lives through real-time video analysis. Achieves 88.64% mAP@50 with production-ready single-stage detection.",
+      tech: ["Python", "PyTorch", "YOLOv8", "OpenCV", "Computer Vision", "Deep Learning"],
+      youtubeId: "",
+      githubLink: "https://github.com/naga-narala/RipCatch",
+      kaggleLink: ""
     },
     {
       title: "Project 3",
