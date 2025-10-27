@@ -86,6 +86,7 @@ function App() {
   const aboutSectionRef = useRef<HTMLElement>(null);
   const projectsSectionRef = useRef<HTMLElement>(null);
   const contactSectionRef = useRef<HTMLElement>(null);
+  const contactGridRef = useRef<HTMLDivElement>(null);
 
   const projects: ProjectType[] = useMemo(() => [
     {
@@ -324,6 +325,13 @@ function App() {
     };
   }, [isMobile, projects]);
 
+  // Observe contact grid for intersection
+  useEffect(() => {
+    if (contactGridRef.current) {
+      observe(contactGridRef.current);
+    }
+  }, [observe]);
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -363,16 +371,44 @@ function App() {
           isScrolled ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'
         }`}
       >
-        <a href="https://www.linkedin.com/in/naga-narala/" target="_blank" rel="noopener noreferrer" className="social-icon text-[#563D7C] hover:text-[#8C6BC8]">
+        <a 
+          href="https://www.linkedin.com/in/naga-narala/" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          title="LinkedIn"
+          aria-label="Visit LinkedIn Profile"
+          className="social-icon text-[#563D7C] hover:text-[#8C6BC8]"
+        >
           <Linkedin className="w-6 h-6" />
         </a>
-        <a href="https://github.com/naga-narala" target="_blank" rel="noopener noreferrer" className="social-icon text-[#563D7C] hover:text-[#8C6BC8]">
+        <a 
+          href="https://github.com/naga-narala" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          title="GitHub"
+          aria-label="Visit GitHub Profile"
+          className="social-icon text-[#563D7C] hover:text-[#8C6BC8]"
+        >
           <Github className="w-6 h-6" />
         </a>
-        <a href="https://www.youtube.com/@naga-narala" target="_blank" rel="noopener noreferrer" className="social-icon text-[#563D7C] hover:text-[#8C6BC8]">
+        <a 
+          href="https://www.youtube.com/@naga-narala" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          title="YouTube"
+          aria-label="Visit YouTube Channel"
+          className="social-icon text-[#563D7C] hover:text-[#8C6BC8]"
+        >
           <Youtube className="w-6 h-6" />
         </a>
-        <a href="https://www.kaggle.com/sravankumarnnv" target="_blank" rel="noopener noreferrer" className="social-icon text-[#563D7C] hover:text-[#8C6BC8]">
+        <a 
+          href="https://www.kaggle.com/sravankumarnnv" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          title="Kaggle"
+          aria-label="Visit Kaggle Profile"
+          className="social-icon text-[#563D7C] hover:text-[#8C6BC8]"
+        >
           <img src="/kaggle.svg" alt="Kaggle" className="w-6 h-6" />
         </a>
       </div>
@@ -541,7 +577,7 @@ function App() {
         </div>
         
         {/* ML Background */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden z-0" style={{ opacity: 0.2 }}>
+        <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 ml-background-overlay">
           <Canvas camera={{ position: [0, 0, isMobile ? 7 : 5.0], fov: 60 }}>
             <MLBackground scale={isMobile ? 0.6 : 1.0} />
           </Canvas>
@@ -600,21 +636,22 @@ function App() {
       <section 
         ref={contactSectionRef as React.RefObject<HTMLElement>}
         className="py-24 px-6 bg-gradient-to-b from-[#E8E9EC] to-[#F8F9FA]"
+        id="contact"
       >
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-[#563D7C]">Get in Touch</h2>
-            <p className="text-[#2D2D2D] mt-2">Let's collaborate on your next project</p>
-            <div className="w-24 h-1 bg-gradient-to-r from-[#563D7C] to-[#44B78B] mx-auto mt-4"></div>
+            <h2 className="text-4xl md:text-5xl font-bold text-[#563D7C] mb-4">Get in Touch</h2>
+            <p className="text-[#2D2D2D] text-lg mt-2">Let's collaborate on your next AI/ML project</p>
+            <div className="w-24 h-1 bg-gradient-to-r from-[#563D7C] to-[#44B78B] mx-auto mt-6 rounded-full"></div>
           </div>
           
           <div 
             className="grid md:grid-cols-2 gap-8"
-            ref={(el) => observe(el)}
+            ref={contactGridRef}
           >
             <div 
               className={`contact-info p-8 bg-white rounded-xl border border-gray-200 shadow-lg transition-all duration-500 ${
-                isVisible(contactSectionRef.current) ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-20'
+                isVisible(contactGridRef.current) ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-20'
               }`}
             >
               <div className="space-y-8">
@@ -654,6 +691,8 @@ function App() {
                       href="https://www.linkedin.com/in/naga-narala/" 
                       target="_blank" 
                       rel="noopener noreferrer"
+                      title="LinkedIn Profile"
+                      aria-label="LinkedIn Profile"
                       className="bg-[#F5F0FF] p-3 rounded-full text-[#563D7C] hover:bg-[#563D7C] hover:text-white transition-all"
                     >
                       <Linkedin className="w-5 h-5" />
@@ -662,6 +701,8 @@ function App() {
                       href="https://github.com/naga-narala" 
                       target="_blank" 
                       rel="noopener noreferrer"
+                      title="GitHub Profile"
+                      aria-label="GitHub Profile"
                       className="bg-[#F5F0FF] p-3 rounded-full text-[#563D7C] hover:bg-[#563D7C] hover:text-white transition-all"
                     >
                       <Github className="w-5 h-5" />
@@ -670,6 +711,8 @@ function App() {
                       href="https://www.kaggle.com/sravankumarnnv" 
                       target="_blank" 
                       rel="noopener noreferrer"
+                      title="Kaggle Profile"
+                      aria-label="Kaggle Profile"
                       className="bg-[#F5F0FF] p-3 rounded-full text-[#563D7C] hover:bg-[#563D7C] hover:text-white transition-all"
                     >
                       <img src="/kaggle.svg" alt="Kaggle" className="w-5 h-5" />
@@ -682,7 +725,7 @@ function App() {
             {/* Conditional Rendering: Form or Confirmation */}
             <div 
               className={`transition-all duration-500 delay-300 ${
-                isVisible(contactSectionRef.current) ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-20'
+                isVisible(contactGridRef.current) ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-20'
               }`}
             >
               {!isConfirming ? (

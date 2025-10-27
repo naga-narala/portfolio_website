@@ -81,6 +81,10 @@ canvas {
   touch-action: none;
 }
 
+.ml-background-overlay {
+  opacity: 0.2;
+}
+
 .projects-bg {
   background: 
     radial-gradient(circle at 10% 20%, rgba(86, 61, 124, 0.1) 0%, transparent 50%),
