@@ -105,12 +105,12 @@ function App() {
       kaggleLink: ""
     },
     {
-      title: "Project 3",
-      description: "Real-time collaboration platform with 3D workspace",
-      tech: ["Three.js", "Socket.io", "Redux"],
-      youtubeId: "dQw4w9WgXcQ",
-      githubLink: "https://github.com/username/project3",
-      kaggleLink: "https://kaggle.com/username/project3"
+      title: "FirePrint - Fire Pattern Analysis",
+      description: "First-of-its-kind computer vision system that transforms geospatial fire boundary data into 4-channel fingerprints for ML analysis. Processes 324K+ Australian bushfires using multi-task CNNs for fire investigation and risk assessment.",
+      tech: ["Python", "TensorFlow", "Computer Vision", "Geospatial Analysis", "Deep Learning", "Pattern Recognition"],
+      youtubeId: "",
+      githubLink: "https://github.com/naga-narala/FirePrint",
+      kaggleLink: "https://kaggle.com/sravankumarnnv"
     },
     {
       title: "Project 4",
