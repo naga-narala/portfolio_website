@@ -482,11 +482,29 @@ function App() {
                   isVisible(aboutSectionRef.current) ? 'opacity-100' : 'opacity-0 translate-y-[30px]'
                 }`}
               >
-                <h3 className="text-2xl font-bold mb-4 text-[#563D7C]">Machine Learning Specialist</h3>
+                <h3 className="text-2xl font-bold mb-4 text-[#563D7C]">AI Engineer & ML Specialist</h3>
                 <p className="text-[#2D2D2D] mb-6 text-lg leading-relaxed">
-                  Currently pursuing a Master of Artificial Intelligence at Monash University.
-                  Special interest in Computer Vision and experienced in Machine Learning and Deep Learning projects.
+                  AI Engineer skilled in building intelligent agent workflows using LangChain, CrewAI, and n8n, with hands-on expertise in ML, CV, and NLP. 
+                  Passionate about deploying scalable AI solutions and driving real-world impact.
                 </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-[#563D7C] rounded-full mt-2"></div>
+                    <div>
+                      <p className="font-semibold text-[#563D7C]">Master of Artificial Intelligence</p>
+                      <p className="text-sm text-[#2D2D2D]">Monash University, Clayton • July 2023 - June 2025</p>
+                      <p className="text-xs text-gray-600 mt-1">Graduated with credit average</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-[#44B78B] rounded-full mt-2"></div>
+                    <div>
+                      <p className="font-semibold text-[#563D7C]">Work Rights</p>
+                      <p className="text-sm text-[#2D2D2D]">Subclass 485 Full Australian Work Rights</p>
+                      <p className="text-xs text-gray-600 mt-1">Valid until August 2028</p>
+                    </div>
+                  </div>
+                </div>
                 <div className="flex gap-6 mt-8 flex-wrap">
                   <div className="stat-box p-4">
                     <span className="text-3xl font-bold text-[#563D7C]">5+</span>
@@ -517,38 +535,106 @@ function App() {
               }`}
             >
               <h3 className="text-xl font-bold mb-5 text-[#563D7C]">Technical Skills</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                <div className="border border-gray-200 rounded-lg p-5 bg-[#F8F9FA] hover:shadow-md transition-all">
-                  <h4 className="font-semibold text-lg mb-3 text-[#563D7C]">Machine Learning</h4>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">TensorFlow</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">PyTorch</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">Scikit-learn</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">CNN</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">RNN</span>
-                  </div>
-                </div>
-                
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
                 <div className="border border-gray-200 rounded-lg p-5 bg-[#F8F9FA] hover:shadow-md transition-all">
                   <h4 className="font-semibold text-lg mb-3 text-[#563D7C]">Programming</h4>
                   <div className="flex flex-wrap gap-2">
                     <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">Python</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">JavaScript</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">R</span>
                     <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">SQL</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">Java</span>
+                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">Data Analysis</span>
                   </div>
                 </div>
                 
                 <div className="border border-gray-200 rounded-lg p-5 bg-[#F8F9FA] hover:shadow-md transition-all">
-                  <h4 className="font-semibold text-lg mb-3 text-[#563D7C]">Tools & Technologies</h4>
+                  <h4 className="font-semibold text-lg mb-3 text-[#563D7C]">Frameworks</h4>
                   <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">Docker</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">Git</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">AWS</span>
+                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">PyTorch</span>
+                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">TensorFlow</span>
+                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">OpenCV</span>
                     <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">Pandas</span>
                     <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">NumPy</span>
+                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">Matplotlib</span>
+                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">Seaborn</span>
                   </div>
+                </div>
+                
+                <div className="border border-gray-200 rounded-lg p-5 bg-[#F8F9FA] hover:shadow-md transition-all">
+                  <h4 className="font-semibold text-lg mb-3 text-[#563D7C]">AI Agents & Automation</h4>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">LangChain</span>
+                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">CrewAI</span>
+                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">n8n</span>
+                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">OpenAI API</span>
+                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">Hugging Face</span>
+                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">Prompt Engineering</span>
+                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">LLM Integration</span>
+                  </div>
+                </div>
+                
+                <div className="border border-gray-200 rounded-lg p-5 bg-[#F8F9FA] hover:shadow-md transition-all">
+                  <h4 className="font-semibold text-lg mb-3 text-[#563D7C]">MLOps & DevOps</h4>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">FastAPI</span>
+                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">Streamlit</span>
+                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">Docker</span>
+                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">Git/GitHub</span>
+                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">CI/CD</span>
+                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">REST APIs</span>
+                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">MLflow</span>
+                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">SageMaker</span>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Data & Cloud Platforms */}
+              <div className="mt-5 border border-gray-200 rounded-lg p-5 bg-[#F8F9FA] hover:shadow-md transition-all">
+                <h4 className="font-semibold text-lg mb-3 text-[#563D7C]">Data & Cloud Platforms</h4>
+                <div className="flex flex-wrap gap-2">
+                  <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">Google Cloud Platform (GCP)</span>
+                  <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">AWS (basic)</span>
+                  <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">Jupyter Notebook</span>
+                  <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">NLP</span>
+                  <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">Model Training & Evaluation</span>
+                </div>
+              </div>
+              
+              {/* Certifications & Achievements */}
+              <div className="mt-8 pt-8 border-t border-gray-200">
+                <h3 className="text-xl font-bold mb-5 text-[#563D7C]">Certifications & Achievements</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="flex items-start gap-3 p-4 bg-white rounded-lg border border-gray-200 hover:shadow-md transition-all">
+                    <div className="w-2 h-2 bg-[#563D7C] rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <p className="font-semibold text-[#563D7C]">MLOps: Machine Learning Operations Specialization</p>
+                      <p className="text-sm text-gray-600">Duke University (Coursera)</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 p-4 bg-white rounded-lg border border-gray-200 hover:shadow-md transition-all">
+                    <div className="w-2 h-2 bg-[#563D7C] rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <p className="font-semibold text-[#563D7C]">Introduction to Data Analytics</p>
+                      <p className="text-sm text-gray-600">IBM (Coursera)</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 p-4 bg-white rounded-lg border border-gray-200 hover:shadow-md transition-all">
+                    <div className="w-2 h-2 bg-[#563D7C] rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <p className="font-semibold text-[#563D7C]">Generative AI with LangChain and Applications</p>
+                      <p className="text-sm text-gray-600">IBM (Coursera)</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 p-4 bg-white rounded-lg border border-gray-200 hover:shadow-md transition-all">
+                    <div className="w-2 h-2 bg-[#44B78B] rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <p className="font-semibold text-[#563D7C]">CrewAI Initial Course</p>
+                      <p className="text-sm text-gray-600">Certified in building multi-agent systems</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-4 p-4 bg-gradient-to-r from-[#563D7C]/10 to-[#44B78B]/10 rounded-lg border border-[#563D7C]/20">
+                  <p className="text-sm text-[#2D2D2D]">
+                    <span className="font-semibold text-[#563D7C]">Additional:</span> Completed multiple AI & automation mini-projects, applying LangChain, n8n, and CrewAI for real-world workflows
+                  </p>
                 </div>
               </div>
             </div>
