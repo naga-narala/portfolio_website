@@ -462,190 +462,164 @@ function App() {
       {/* About Section */}
       <section 
         ref={aboutSectionRef as React.RefObject<HTMLElement>}
-        className="py-24 px-6 md:px-12 lg:px-24 bg-gradient-to-b from-[#F5F0FF]/20 to-[#E8E9EC]"
+        className="py-20 px-6 md:px-12 lg:px-24 bg-gradient-to-b from-[#F5F0FF]/20 to-[#E8E9EC]"
       >
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-10">
             <h2 className="text-4xl font-bold text-[#563D7C]">About Me</h2>
             <div className="w-24 h-1 bg-gradient-to-r from-[#563D7C] to-[#44B78B] mx-auto mt-3"></div>
           </div>
           
           <div 
-            className="glowing-border p-8 md:p-10 rounded-2xl bg-white shadow-xl"
+            className="space-y-6"
             ref={aboutContentRef}
           >
-            <div className="flex flex-col md:flex-row items-center gap-12">
+              {/* Summary Card */}
               <div 
-                className={`profile-circle bg-gray-100 overflow-hidden w-60 h-60 flex-shrink-0 transition-all duration-700 ${
-                  isVisible(aboutContentRef.current) ? 'opacity-100' : 'opacity-0 translate-x-[-50px]'
+                className={`bg-white rounded-2xl p-6 shadow-lg border border-gray-100 transition-all duration-700 delay-100 ${
+                  isVisible(aboutContentRef.current) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
                 }`}
               >
-                {/* Replace Wall-E with an AI-related professional image */}
-                <div className="w-full h-full bg-gradient-to-br from-[#563D7C]/90 to-[#44B78B]/90 flex items-center justify-center">
-                  <div className="text-white text-5xl font-bold">NN</div>
-                </div>
-              </div>
-              <div 
-                className={`flex-1 transition-all duration-700 delay-300 ${
-                  isVisible(aboutContentRef.current) ? 'opacity-100' : 'opacity-0 translate-y-[30px]'
-                }`}
-              >
-                <h3 className="text-2xl font-bold mb-4 text-[#563D7C]">AI Engineer & ML Specialist</h3>
-                <p className="text-[#2D2D2D] mb-6 text-lg leading-relaxed">
-                  AI Engineer skilled in building intelligent agent workflows using LangChain, CrewAI, and n8n, with hands-on expertise in ML, CV, and NLP. 
+                <h3 className="text-lg font-bold text-[#563D7C] mb-3 flex items-center gap-2">
+                  <div className="w-1 h-6 bg-gradient-to-b from-[#563D7C] to-[#44B78B] rounded-full"></div>
+                  Professional Summary
+                </h3>
+                <p className="text-[#2D2D2D] leading-relaxed">
+                  AI Engineer skilled in building intelligent agent workflows using <span className="font-semibold text-[#563D7C]">LangChain</span>, <span className="font-semibold text-[#563D7C]">CrewAI</span>, and <span className="font-semibold text-[#563D7C]">n8n</span>, with hands-on expertise in ML, CV, and NLP. 
                   Passionate about deploying scalable AI solutions and driving real-world impact.
                 </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-[#563D7C] rounded-full mt-2"></div>
-                    <div>
-                      <p className="font-semibold text-[#563D7C]">Master of Artificial Intelligence</p>
-                      <p className="text-sm text-[#2D2D2D]">Monash University, Clayton • July 2023 - June 2025</p>
-                      <p className="text-xs text-gray-600 mt-1">Graduated with credit average</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-[#44B78B] rounded-full mt-2"></div>
-                    <div>
-                      <p className="font-semibold text-[#563D7C]">Work Rights</p>
-                      <p className="text-sm text-[#2D2D2D]">Subclass 485 Full Australian Work Rights</p>
-                      <p className="text-xs text-gray-600 mt-1">Valid until August 2028</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex gap-6 mt-8 flex-wrap">
-                  <div className="stat-box p-4">
-                    <span className="text-3xl font-bold text-[#563D7C]">5+</span>
-                    <span className="text-base text-[#2D2D2D]">Projects</span>
-                  </div>
-                  <div className="stat-box p-4">
-                    <span className="text-3xl font-bold text-[#563D7C]">3+</span>
-                    <span className="text-base text-[#2D2D2D]">Years</span>
-                  </div>
-                  <a
-                    href="/resume.pdf"
-                    download="Naga_Narala_Resume.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="stat-box p-4 flex flex-col items-center justify-center cursor-pointer hover:bg-[#563D7C]/10 transition-colors"
-                  >
-                    <Download className="w-6 h-6 mb-1 text-[#563D7C]" />
-                    <span className="text-base text-[#2D2D2D]">Resume</span>
-                  </a>
-                </div>
               </div>
-            </div>
-            
-            {/* Skills section */}
-            <div 
-              className={`mt-12 transition-all duration-700 delay-500 ${
-                isVisible(aboutContentRef.current) ? 'opacity-100' : 'opacity-0 translate-y-[30px]'
-              }`}
-            >
-              <h3 className="text-xl font-bold mb-5 text-[#563D7C]">Technical Skills</h3>
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
-                <div className="border border-gray-200 rounded-lg p-5 bg-[#F8F9FA] hover:shadow-md transition-all">
-                  <h4 className="font-semibold text-lg mb-3 text-[#563D7C]">Programming</h4>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">Python</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">SQL</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">Data Analysis</span>
+
+              {/* Education & Work Rights */}
+              <div 
+                className={`grid grid-cols-1 md:grid-cols-2 gap-6 transition-all duration-700 delay-200 ${
+                  isVisible(aboutContentRef.current) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                }`}
+              >
+                <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                  <div className="flex items-start gap-3 mb-3">
+                    <div className="w-10 h-10 rounded-lg bg-[#563D7C]/10 flex items-center justify-center flex-shrink-0">
+                      <div className="w-3 h-3 bg-[#563D7C] rounded-full"></div>
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-[#563D7C]">Education</h4>
+                      <p className="text-sm text-gray-600">2023 - 2025</p>
+                    </div>
+                  </div>
+                  <p className="font-semibold text-[#2D2D2D] mb-1">Master of Artificial Intelligence</p>
+                  <p className="text-sm text-gray-600">Monash University, Clayton</p>
+                  <div className="mt-3 inline-flex items-center gap-2 px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-xs font-semibold">
+                    ✨ Credit Average
                   </div>
                 </div>
-                
-                <div className="border border-gray-200 rounded-lg p-5 bg-[#F8F9FA] hover:shadow-md transition-all">
-                  <h4 className="font-semibold text-lg mb-3 text-[#563D7C]">Frameworks</h4>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">PyTorch</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">TensorFlow</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">OpenCV</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">Pandas</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">NumPy</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">Matplotlib</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">Seaborn</span>
+
+                <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                  <div className="flex items-start gap-3 mb-3">
+                    <div className="w-10 h-10 rounded-lg bg-[#44B78B]/10 flex items-center justify-center flex-shrink-0">
+                      <div className="w-3 h-3 bg-[#44B78B] rounded-full"></div>
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-[#563D7C]">Work Rights</h4>
+                      <p className="text-sm text-gray-600">Australian Visa</p>
+                    </div>
                   </div>
-                </div>
-                
-                <div className="border border-gray-200 rounded-lg p-5 bg-[#F8F9FA] hover:shadow-md transition-all">
-                  <h4 className="font-semibold text-lg mb-3 text-[#563D7C]">AI Agents & Automation</h4>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">LangChain</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">CrewAI</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">n8n</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">OpenAI API</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">Hugging Face</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">Prompt Engineering</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">LLM Integration</span>
-                  </div>
-                </div>
-                
-                <div className="border border-gray-200 rounded-lg p-5 bg-[#F8F9FA] hover:shadow-md transition-all">
-                  <h4 className="font-semibold text-lg mb-3 text-[#563D7C]">MLOps & DevOps</h4>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">FastAPI</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">Streamlit</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">Docker</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">Git/GitHub</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">CI/CD</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">REST APIs</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">MLflow</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">SageMaker</span>
+                  <p className="font-semibold text-[#2D2D2D] mb-1">Subclass 485 Full Work Rights</p>
+                  <p className="text-sm text-gray-600">Valid until August 2028</p>
+                  <div className="mt-3 inline-flex items-center gap-2 px-3 py-1 bg-[#44B78B]/10 text-[#44B78B] rounded-full text-xs font-semibold">
+                    ✓ No Restrictions
                   </div>
                 </div>
               </div>
-              
-              {/* Data & Cloud Platforms */}
-              <div className="mt-5 border border-gray-200 rounded-lg p-5 bg-[#F8F9FA] hover:shadow-md transition-all">
-                <h4 className="font-semibold text-lg mb-3 text-[#563D7C]">Data & Cloud Platforms</h4>
-                <div className="flex flex-wrap gap-2">
-                  <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">Google Cloud Platform (GCP)</span>
-                  <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">AWS (basic)</span>
-                  <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">Jupyter Notebook</span>
-                  <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">NLP</span>
-                  <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">Model Training & Evaluation</span>
+
+              {/* Technical Skills - Compact Grid */}
+              <div 
+                className={`bg-white rounded-2xl p-6 shadow-lg border border-gray-100 transition-all duration-700 delay-300 ${
+                  isVisible(aboutContentRef.current) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                }`}
+              >
+                <h3 className="text-lg font-bold text-[#563D7C] mb-4 flex items-center gap-2">
+                  <div className="w-1 h-6 bg-gradient-to-b from-[#563D7C] to-[#44B78B] rounded-full"></div>
+                  Technical Stack
+                </h3>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  <div className="space-y-2">
+                    <p className="text-xs font-semibold text-[#563D7C] uppercase tracking-wide">Programming</p>
+                    <div className="flex flex-wrap gap-1">
+                      <span className="text-xs px-2 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded">Python</span>
+                      <span className="text-xs px-2 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded">SQL</span>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <p className="text-xs font-semibold text-[#563D7C] uppercase tracking-wide">ML/DL</p>
+                    <div className="flex flex-wrap gap-1">
+                      <span className="text-xs px-2 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded">PyTorch</span>
+                      <span className="text-xs px-2 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded">TensorFlow</span>
+                      <span className="text-xs px-2 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded">OpenCV</span>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <p className="text-xs font-semibold text-[#563D7C] uppercase tracking-wide">AI Agents</p>
+                    <div className="flex flex-wrap gap-1">
+                      <span className="text-xs px-2 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded">LangChain</span>
+                      <span className="text-xs px-2 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded">CrewAI</span>
+                      <span className="text-xs px-2 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded">n8n</span>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <p className="text-xs font-semibold text-[#563D7C] uppercase tracking-wide">MLOps</p>
+                    <div className="flex flex-wrap gap-1">
+                      <span className="text-xs px-2 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded">Docker</span>
+                      <span className="text-xs px-2 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded">FastAPI</span>
+                      <span className="text-xs px-2 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded">GCP</span>
+                    </div>
+                  </div>
                 </div>
               </div>
-              
-              {/* Certifications & Achievements */}
-              <div className="mt-8 pt-8 border-t border-gray-200">
-                <h3 className="text-xl font-bold mb-5 text-[#563D7C]">Certifications & Achievements</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="flex items-start gap-3 p-4 bg-white rounded-lg border border-gray-200 hover:shadow-md transition-all">
-                    <div className="w-2 h-2 bg-[#563D7C] rounded-full mt-2 flex-shrink-0"></div>
+
+              {/* Certifications */}
+              <div 
+                className={`bg-white rounded-2xl p-6 shadow-lg border border-gray-100 transition-all duration-700 delay-400 ${
+                  isVisible(aboutContentRef.current) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                }`}
+              >
+                <h3 className="text-lg font-bold text-[#563D7C] mb-4 flex items-center gap-2">
+                  <div className="w-1 h-6 bg-gradient-to-b from-[#563D7C] to-[#44B78B] rounded-full"></div>
+                  Certifications
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <div className="flex items-start gap-3 p-3 bg-[#F8F9FA] rounded-lg hover:bg-[#F5F0FF] transition-colors">
+                    <div className="w-2 h-2 bg-[#563D7C] rounded-full mt-1.5 flex-shrink-0"></div>
                     <div>
-                      <p className="font-semibold text-[#563D7C]">MLOps: Machine Learning Operations Specialization</p>
-                      <p className="text-sm text-gray-600">Duke University (Coursera)</p>
+                      <p className="text-sm font-semibold text-[#563D7C]">MLOps Specialization</p>
+                      <p className="text-xs text-gray-600">Duke University</p>
                     </div>
                   </div>
-                  <div className="flex items-start gap-3 p-4 bg-white rounded-lg border border-gray-200 hover:shadow-md transition-all">
-                    <div className="w-2 h-2 bg-[#563D7C] rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="flex items-start gap-3 p-3 bg-[#F8F9FA] rounded-lg hover:bg-[#F5F0FF] transition-colors">
+                    <div className="w-2 h-2 bg-[#563D7C] rounded-full mt-1.5 flex-shrink-0"></div>
                     <div>
-                      <p className="font-semibold text-[#563D7C]">Introduction to Data Analytics</p>
-                      <p className="text-sm text-gray-600">IBM (Coursera)</p>
+                      <p className="text-sm font-semibold text-[#563D7C]">Generative AI with LangChain</p>
+                      <p className="text-xs text-gray-600">IBM</p>
                     </div>
                   </div>
-                  <div className="flex items-start gap-3 p-4 bg-white rounded-lg border border-gray-200 hover:shadow-md transition-all">
-                    <div className="w-2 h-2 bg-[#563D7C] rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="flex items-start gap-3 p-3 bg-[#F8F9FA] rounded-lg hover:bg-[#F5F0FF] transition-colors">
+                    <div className="w-2 h-2 bg-[#563D7C] rounded-full mt-1.5 flex-shrink-0"></div>
                     <div>
-                      <p className="font-semibold text-[#563D7C]">Generative AI with LangChain and Applications</p>
-                      <p className="text-sm text-gray-600">IBM (Coursera)</p>
+                      <p className="text-sm font-semibold text-[#563D7C]">Data Analytics</p>
+                      <p className="text-xs text-gray-600">IBM</p>
                     </div>
                   </div>
-                  <div className="flex items-start gap-3 p-4 bg-white rounded-lg border border-gray-200 hover:shadow-md transition-all">
-                    <div className="w-2 h-2 bg-[#44B78B] rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="flex items-start gap-3 p-3 bg-[#F8F9FA] rounded-lg hover:bg-[#F5F0FF] transition-colors">
+                    <div className="w-2 h-2 bg-[#563D7C] rounded-full mt-1.5 flex-shrink-0"></div>
                     <div>
-                      <p className="font-semibold text-[#563D7C]">CrewAI Initial Course</p>
-                      <p className="text-sm text-gray-600">Certified in building multi-agent systems</p>
+                      <p className="text-sm font-semibold text-[#563D7C]">CrewAI Multi-Agent Systems</p>
+                      <p className="text-xs text-gray-600">Certified</p>
                     </div>
                   </div>
-                </div>
-                <div className="mt-4 p-4 bg-gradient-to-r from-[#563D7C]/10 to-[#44B78B]/10 rounded-lg border border-[#563D7C]/20">
-                  <p className="text-sm text-[#2D2D2D]">
-                    <span className="font-semibold text-[#563D7C]">Additional:</span> Completed multiple AI & automation mini-projects, applying LangChain, n8n, and CrewAI for real-world workflows
-                  </p>
                 </div>
               </div>
-            </div>
           </div>
         </div>
       </section>
