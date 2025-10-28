@@ -84,6 +84,7 @@ function App() {
   const projectsRef = useRef<(HTMLDivElement | null)[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
   const aboutSectionRef = useRef<HTMLElement>(null);
+  const aboutContentRef = useRef<HTMLDivElement>(null);
   const projectsSectionRef = useRef<HTMLElement>(null);
   const contactSectionRef = useRef<HTMLElement>(null);
   const contactGridRef = useRef<HTMLDivElement>(null);
@@ -332,6 +333,13 @@ function App() {
     }
   }, [observe]);
 
+  // Observe about content for intersection
+  useEffect(() => {
+    if (aboutContentRef.current) {
+      observe(aboutContentRef.current);
+    }
+  }, [observe]);
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -464,12 +472,12 @@ function App() {
           
           <div 
             className="glowing-border p-8 md:p-10 rounded-2xl bg-white shadow-xl"
-            ref={(el) => observe(el)}
+            ref={aboutContentRef}
           >
             <div className="flex flex-col md:flex-row items-center gap-12">
               <div 
                 className={`profile-circle bg-gray-100 overflow-hidden w-60 h-60 flex-shrink-0 transition-all duration-700 ${
-                  isVisible(aboutSectionRef.current) ? 'opacity-100' : 'opacity-0 translate-x-[-50px]'
+                  isVisible(aboutContentRef.current) ? 'opacity-100' : 'opacity-0 translate-x-[-50px]'
                 }`}
               >
                 {/* Replace Wall-E with an AI-related professional image */}
@@ -479,7 +487,7 @@ function App() {
               </div>
               <div 
                 className={`flex-1 transition-all duration-700 delay-300 ${
-                  isVisible(aboutSectionRef.current) ? 'opacity-100' : 'opacity-0 translate-y-[30px]'
+                  isVisible(aboutContentRef.current) ? 'opacity-100' : 'opacity-0 translate-y-[30px]'
                 }`}
               >
                 <h3 className="text-2xl font-bold mb-4 text-[#563D7C]">AI Engineer & ML Specialist</h3>
@@ -531,7 +539,7 @@ function App() {
             {/* Skills section */}
             <div 
               className={`mt-12 transition-all duration-700 delay-500 ${
-                isVisible(aboutSectionRef.current) ? 'opacity-100' : 'opacity-0 translate-y-[30px]'
+                isVisible(aboutContentRef.current) ? 'opacity-100' : 'opacity-0 translate-y-[30px]'
               }`}
             >
               <h3 className="text-xl font-bold mb-5 text-[#563D7C]">Technical Skills</h3>
