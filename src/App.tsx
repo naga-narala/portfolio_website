@@ -84,8 +84,10 @@ function App() {
   const projectsRef = useRef<(HTMLDivElement | null)[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
   const aboutSectionRef = useRef<HTMLElement>(null);
+  const aboutContentRef = useRef<HTMLDivElement>(null);
   const projectsSectionRef = useRef<HTMLElement>(null);
   const contactSectionRef = useRef<HTMLElement>(null);
+  const contactGridRef = useRef<HTMLDivElement>(null);
 
   const projects: ProjectType[] = useMemo(() => [
     {
@@ -97,36 +99,36 @@ function App() {
       kaggleLink: ""
     },
     {
-      title: "Project 2",
-      description: "Immersive 3D visualization tool for complex datasets",
-      tech: ["WebGL", "D3.js", "Node.js"],
-      youtubeId: "dQw4w9WgXcQ",
-      githubLink: "https://github.com/username/project2",
-      kaggleLink: "https://kaggle.com/username/project2"
+      title: "RipCatch - AI Beach Safety System",
+      description: "AI-powered rip current detection system using YOLOv8 computer vision to enhance beach safety and save lives through real-time video analysis. Achieves 88.64% mAP@50 with production-ready single-stage detection.",
+      tech: ["Python", "PyTorch", "YOLOv8", "OpenCV", "Computer Vision", "Deep Learning"],
+      youtubeId: "",
+      githubLink: "https://github.com/naga-narala/RipCatch",
+      kaggleLink: ""
     },
     {
-      title: "Project 3",
-      description: "Real-time collaboration platform with 3D workspace",
-      tech: ["Three.js", "Socket.io", "Redux"],
-      youtubeId: "dQw4w9WgXcQ",
-      githubLink: "https://github.com/username/project3",
-      kaggleLink: "https://kaggle.com/username/project3"
+      title: "FirePrint - Fire Pattern Analysis",
+      description: "First-of-its-kind computer vision system that transforms geospatial fire boundary data into 4-channel fingerprints for ML analysis. Processes 324K+ Australian bushfires using multi-task CNNs for fire investigation and risk assessment.",
+      tech: ["Python", "TensorFlow", "Computer Vision", "Geospatial Analysis", "Deep Learning", "Pattern Recognition"],
+      youtubeId: "",
+      githubLink: "https://github.com/naga-narala/FirePrint",
+      kaggleLink: "https://kaggle.com/sravankumarnnv"
     },
     {
-      title: "Project 4",
-      description: "Advanced animation system for interactive storytelling",
-      tech: ["GSAP", "React Three Fiber", "TypeScript"],
-      youtubeId: "dQw4w9WgXcQ",
-      githubLink: "https://github.com/username/project4",
-      kaggleLink: "https://kaggle.com/username/project4"
+      title: "RiverMind - Hydrological ML (In Progress)",
+      description: "Machine learning system for flood risk prediction and river health monitoring using 10M+ hydrological records. Multi-risk assessment covering water quality, flood events, drought conditions using XGBoost and LSTM models.",
+      tech: ["Python", "XGBoost", "LSTM", "Time Series Analysis", "Pandas", "Hydrological Data"],
+      youtubeId: "",
+      githubLink: "https://github.com/naga-narala/RiverMind",
+      kaggleLink: "https://kaggle.com/sravankumarnnv"
     },
     {
-      title: "Project 5",
-      description: "Virtual reality experience for architectural visualization",
-      tech: ["Three.js", "WebXR", "Blender"],
-      youtubeId: "dQw4w9WgXcQ",
-      githubLink: "https://github.com/username/project5",
-      kaggleLink: "https://kaggle.com/username/project5"
+      title: "Birthday Automation - SAYS Charity",
+      description: "Automated birthday greeting system for 400+ supporters with PhonePe UPI donation integration, personalized HTML email templates, and social media engagement tracking. Built with n8n workflow automation.",
+      tech: ["n8n", "Node.js", "JavaScript", "Email Automation", "PhonePe API", "Workflow Design"],
+      youtubeId: "",
+      githubLink: "https://github.com/naga-narala/Birthday-Automation",
+      kaggleLink: ""
     }
   ], []);
 
@@ -324,6 +326,20 @@ function App() {
     };
   }, [isMobile, projects]);
 
+  // Observe contact grid for intersection
+  useEffect(() => {
+    if (contactGridRef.current) {
+      observe(contactGridRef.current);
+    }
+  }, [observe]);
+
+  // Observe about content for intersection
+  useEffect(() => {
+    if (aboutContentRef.current) {
+      observe(aboutContentRef.current);
+    }
+  }, [observe]);
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -363,16 +379,44 @@ function App() {
           isScrolled ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'
         }`}
       >
-        <a href="https://www.linkedin.com/in/naga-narala/" target="_blank" rel="noopener noreferrer" className="social-icon text-[#563D7C] hover:text-[#8C6BC8]">
+        <a 
+          href="https://www.linkedin.com/in/naga-narala/" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          title="LinkedIn"
+          aria-label="Visit LinkedIn Profile"
+          className="social-icon text-[#563D7C] hover:text-[#8C6BC8]"
+        >
           <Linkedin className="w-6 h-6" />
         </a>
-        <a href="https://github.com/naga-narala" target="_blank" rel="noopener noreferrer" className="social-icon text-[#563D7C] hover:text-[#8C6BC8]">
+        <a 
+          href="https://github.com/naga-narala" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          title="GitHub"
+          aria-label="Visit GitHub Profile"
+          className="social-icon text-[#563D7C] hover:text-[#8C6BC8]"
+        >
           <Github className="w-6 h-6" />
         </a>
-        <a href="https://www.youtube.com/@naga-narala" target="_blank" rel="noopener noreferrer" className="social-icon text-[#563D7C] hover:text-[#8C6BC8]">
+        <a 
+          href="https://www.youtube.com/@naga-narala" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          title="YouTube"
+          aria-label="Visit YouTube Channel"
+          className="social-icon text-[#563D7C] hover:text-[#8C6BC8]"
+        >
           <Youtube className="w-6 h-6" />
         </a>
-        <a href="https://www.kaggle.com/sravankumarnnv" target="_blank" rel="noopener noreferrer" className="social-icon text-[#563D7C] hover:text-[#8C6BC8]">
+        <a 
+          href="https://www.kaggle.com/sravankumarnnv" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          title="Kaggle"
+          aria-label="Visit Kaggle Profile"
+          className="social-icon text-[#563D7C] hover:text-[#8C6BC8]"
+        >
           <img src="/kaggle.svg" alt="Kaggle" className="w-6 h-6" />
         </a>
       </div>
@@ -418,104 +462,164 @@ function App() {
       {/* About Section */}
       <section 
         ref={aboutSectionRef as React.RefObject<HTMLElement>}
-        className="py-24 px-6 md:px-12 lg:px-24 bg-gradient-to-b from-[#F5F0FF]/20 to-[#E8E9EC]"
+        className="py-20 px-6 md:px-12 lg:px-24 bg-gradient-to-b from-[#F5F0FF]/20 to-[#E8E9EC]"
       >
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-10">
             <h2 className="text-4xl font-bold text-[#563D7C]">About Me</h2>
             <div className="w-24 h-1 bg-gradient-to-r from-[#563D7C] to-[#44B78B] mx-auto mt-3"></div>
           </div>
           
           <div 
-            className="glowing-border p-8 md:p-10 rounded-2xl bg-white shadow-xl"
-            ref={(el) => observe(el)}
+            className="space-y-6"
+            ref={aboutContentRef}
           >
-            <div className="flex flex-col md:flex-row items-center gap-12">
+              {/* Summary Card */}
               <div 
-                className={`profile-circle bg-gray-100 overflow-hidden w-60 h-60 flex-shrink-0 transition-all duration-700 ${
-                  isVisible(aboutSectionRef.current) ? 'opacity-100' : 'opacity-0 translate-x-[-50px]'
+                className={`bg-white rounded-2xl p-6 shadow-lg border border-gray-100 transition-all duration-700 delay-100 ${
+                  isVisible(aboutContentRef.current) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
                 }`}
               >
-                {/* Replace Wall-E with an AI-related professional image */}
-                <div className="w-full h-full bg-gradient-to-br from-[#563D7C]/90 to-[#44B78B]/90 flex items-center justify-center">
-                  <div className="text-white text-5xl font-bold">NN</div>
-                </div>
-              </div>
-              <div 
-                className={`flex-1 transition-all duration-700 delay-300 ${
-                  isVisible(aboutSectionRef.current) ? 'opacity-100' : 'opacity-0 translate-y-[30px]'
-                }`}
-              >
-                <h3 className="text-2xl font-bold mb-4 text-[#563D7C]">Machine Learning Specialist</h3>
-                <p className="text-[#2D2D2D] mb-6 text-lg leading-relaxed">
-                  Currently pursuing a Master of Artificial Intelligence at Monash University.
-                  Special interest in Computer Vision and experienced in Machine Learning and Deep Learning projects.
+                <h3 className="text-lg font-bold text-[#563D7C] mb-3 flex items-center gap-2">
+                  <div className="w-1 h-6 bg-gradient-to-b from-[#563D7C] to-[#44B78B] rounded-full"></div>
+                  Professional Summary
+                </h3>
+                <p className="text-[#2D2D2D] leading-relaxed">
+                  AI Engineer skilled in building intelligent agent workflows using <span className="font-semibold text-[#563D7C]">LangChain</span>, <span className="font-semibold text-[#563D7C]">CrewAI</span>, and <span className="font-semibold text-[#563D7C]">n8n</span>, with hands-on expertise in ML, CV, and NLP. 
+                  Passionate about deploying scalable AI solutions and driving real-world impact.
                 </p>
-                <div className="flex gap-6 mt-8 flex-wrap">
-                  <div className="stat-box p-4">
-                    <span className="text-3xl font-bold text-[#563D7C]">5+</span>
-                    <span className="text-base text-[#2D2D2D]">Projects</span>
-                  </div>
-                  <div className="stat-box p-4">
-                    <span className="text-3xl font-bold text-[#563D7C]">3+</span>
-                    <span className="text-base text-[#2D2D2D]">Years</span>
-                  </div>
-                  <a
-                    href="/resume.pdf"
-                    download="Naga_Narala_Resume.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="stat-box p-4 flex flex-col items-center justify-center cursor-pointer hover:bg-[#563D7C]/10 transition-colors"
-                  >
-                    <Download className="w-6 h-6 mb-1 text-[#563D7C]" />
-                    <span className="text-base text-[#2D2D2D]">Resume</span>
-                  </a>
-                </div>
               </div>
-            </div>
-            
-            {/* Skills section */}
-            <div 
-              className={`mt-12 transition-all duration-700 delay-500 ${
-                isVisible(aboutSectionRef.current) ? 'opacity-100' : 'opacity-0 translate-y-[30px]'
-              }`}
-            >
-              <h3 className="text-xl font-bold mb-5 text-[#563D7C]">Technical Skills</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                <div className="border border-gray-200 rounded-lg p-5 bg-[#F8F9FA] hover:shadow-md transition-all">
-                  <h4 className="font-semibold text-lg mb-3 text-[#563D7C]">Machine Learning</h4>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">TensorFlow</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">PyTorch</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">Scikit-learn</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">CNN</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">RNN</span>
+
+              {/* Education & Work Rights */}
+              <div 
+                className={`grid grid-cols-1 md:grid-cols-2 gap-6 transition-all duration-700 delay-200 ${
+                  isVisible(aboutContentRef.current) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                }`}
+              >
+                <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                  <div className="flex items-start gap-3 mb-3">
+                    <div className="w-10 h-10 rounded-lg bg-[#563D7C]/10 flex items-center justify-center flex-shrink-0">
+                      <div className="w-3 h-3 bg-[#563D7C] rounded-full"></div>
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-[#563D7C]">Education</h4>
+                      <p className="text-sm text-gray-600">2023 - 2025</p>
+                    </div>
+                  </div>
+                  <p className="font-semibold text-[#2D2D2D] mb-1">Master of Artificial Intelligence</p>
+                  <p className="text-sm text-gray-600">Monash University, Clayton</p>
+                  <div className="mt-3 inline-flex items-center gap-2 px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-xs font-semibold">
+                    ✨ Credit Average
                   </div>
                 </div>
-                
-                <div className="border border-gray-200 rounded-lg p-5 bg-[#F8F9FA] hover:shadow-md transition-all">
-                  <h4 className="font-semibold text-lg mb-3 text-[#563D7C]">Programming</h4>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">Python</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">JavaScript</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">R</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">SQL</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">Java</span>
+
+                <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                  <div className="flex items-start gap-3 mb-3">
+                    <div className="w-10 h-10 rounded-lg bg-[#44B78B]/10 flex items-center justify-center flex-shrink-0">
+                      <div className="w-3 h-3 bg-[#44B78B] rounded-full"></div>
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-[#563D7C]">Work Rights</h4>
+                      <p className="text-sm text-gray-600">Australian Visa</p>
+                    </div>
                   </div>
-                </div>
-                
-                <div className="border border-gray-200 rounded-lg p-5 bg-[#F8F9FA] hover:shadow-md transition-all">
-                  <h4 className="font-semibold text-lg mb-3 text-[#563D7C]">Tools & Technologies</h4>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">Docker</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">Git</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">AWS</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">Pandas</span>
-                    <span className="px-3 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded-full text-sm">NumPy</span>
+                  <p className="font-semibold text-[#2D2D2D] mb-1">Subclass 485 Full Work Rights</p>
+                  <p className="text-sm text-gray-600">Valid until August 2028</p>
+                  <div className="mt-3 inline-flex items-center gap-2 px-3 py-1 bg-[#44B78B]/10 text-[#44B78B] rounded-full text-xs font-semibold">
+                    ✓ No Restrictions
                   </div>
                 </div>
               </div>
-            </div>
+
+              {/* Technical Skills - Compact Grid */}
+              <div 
+                className={`bg-white rounded-2xl p-6 shadow-lg border border-gray-100 transition-all duration-700 delay-300 ${
+                  isVisible(aboutContentRef.current) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                }`}
+              >
+                <h3 className="text-lg font-bold text-[#563D7C] mb-4 flex items-center gap-2">
+                  <div className="w-1 h-6 bg-gradient-to-b from-[#563D7C] to-[#44B78B] rounded-full"></div>
+                  Technical Stack
+                </h3>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  <div className="space-y-2">
+                    <p className="text-xs font-semibold text-[#563D7C] uppercase tracking-wide">Programming</p>
+                    <div className="flex flex-wrap gap-1">
+                      <span className="text-xs px-2 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded">Python</span>
+                      <span className="text-xs px-2 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded">SQL</span>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <p className="text-xs font-semibold text-[#563D7C] uppercase tracking-wide">ML/DL</p>
+                    <div className="flex flex-wrap gap-1">
+                      <span className="text-xs px-2 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded">PyTorch</span>
+                      <span className="text-xs px-2 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded">TensorFlow</span>
+                      <span className="text-xs px-2 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded">OpenCV</span>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <p className="text-xs font-semibold text-[#563D7C] uppercase tracking-wide">AI Agents</p>
+                    <div className="flex flex-wrap gap-1">
+                      <span className="text-xs px-2 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded">LangChain</span>
+                      <span className="text-xs px-2 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded">CrewAI</span>
+                      <span className="text-xs px-2 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded">n8n</span>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <p className="text-xs font-semibold text-[#563D7C] uppercase tracking-wide">MLOps</p>
+                    <div className="flex flex-wrap gap-1">
+                      <span className="text-xs px-2 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded">Docker</span>
+                      <span className="text-xs px-2 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded">FastAPI</span>
+                      <span className="text-xs px-2 py-1 bg-[#563D7C]/10 text-[#563D7C] rounded">GCP</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Certifications */}
+              <div 
+                className={`bg-white rounded-2xl p-6 shadow-lg border border-gray-100 transition-all duration-700 delay-400 ${
+                  isVisible(aboutContentRef.current) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                }`}
+              >
+                <h3 className="text-lg font-bold text-[#563D7C] mb-4 flex items-center gap-2">
+                  <div className="w-1 h-6 bg-gradient-to-b from-[#563D7C] to-[#44B78B] rounded-full"></div>
+                  Certifications
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <div className="flex items-start gap-3 p-3 bg-[#F8F9FA] rounded-lg hover:bg-[#F5F0FF] transition-colors">
+                    <div className="w-2 h-2 bg-[#563D7C] rounded-full mt-1.5 flex-shrink-0"></div>
+                    <div>
+                      <p className="text-sm font-semibold text-[#563D7C]">MLOps Specialization</p>
+                      <p className="text-xs text-gray-600">Duke University</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 p-3 bg-[#F8F9FA] rounded-lg hover:bg-[#F5F0FF] transition-colors">
+                    <div className="w-2 h-2 bg-[#563D7C] rounded-full mt-1.5 flex-shrink-0"></div>
+                    <div>
+                      <p className="text-sm font-semibold text-[#563D7C]">Generative AI with LangChain</p>
+                      <p className="text-xs text-gray-600">IBM</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 p-3 bg-[#F8F9FA] rounded-lg hover:bg-[#F5F0FF] transition-colors">
+                    <div className="w-2 h-2 bg-[#563D7C] rounded-full mt-1.5 flex-shrink-0"></div>
+                    <div>
+                      <p className="text-sm font-semibold text-[#563D7C]">Data Analytics</p>
+                      <p className="text-xs text-gray-600">IBM</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 p-3 bg-[#F8F9FA] rounded-lg hover:bg-[#F5F0FF] transition-colors">
+                    <div className="w-2 h-2 bg-[#563D7C] rounded-full mt-1.5 flex-shrink-0"></div>
+                    <div>
+                      <p className="text-sm font-semibold text-[#563D7C]">CrewAI Multi-Agent Systems</p>
+                      <p className="text-xs text-gray-600">Certified</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
           </div>
         </div>
       </section>
@@ -541,7 +645,7 @@ function App() {
         </div>
         
         {/* ML Background */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden z-0" style={{ opacity: 0.2 }}>
+        <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 ml-background-overlay">
           <Canvas camera={{ position: [0, 0, isMobile ? 7 : 5.0], fov: 60 }}>
             <MLBackground scale={isMobile ? 0.6 : 1.0} />
           </Canvas>
@@ -600,21 +704,22 @@ function App() {
       <section 
         ref={contactSectionRef as React.RefObject<HTMLElement>}
         className="py-24 px-6 bg-gradient-to-b from-[#E8E9EC] to-[#F8F9FA]"
+        id="contact"
       >
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-[#563D7C]">Get in Touch</h2>
-            <p className="text-[#2D2D2D] mt-2">Let's collaborate on your next project</p>
-            <div className="w-24 h-1 bg-gradient-to-r from-[#563D7C] to-[#44B78B] mx-auto mt-4"></div>
+            <h2 className="text-4xl md:text-5xl font-bold text-[#563D7C] mb-4">Get in Touch</h2>
+            <p className="text-[#2D2D2D] text-lg mt-2">Let's collaborate on your next AI/ML project</p>
+            <div className="w-24 h-1 bg-gradient-to-r from-[#563D7C] to-[#44B78B] mx-auto mt-6 rounded-full"></div>
           </div>
           
           <div 
             className="grid md:grid-cols-2 gap-8"
-            ref={(el) => observe(el)}
+            ref={contactGridRef}
           >
             <div 
               className={`contact-info p-8 bg-white rounded-xl border border-gray-200 shadow-lg transition-all duration-500 ${
-                isVisible(contactSectionRef.current) ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-20'
+                isVisible(contactGridRef.current) ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-20'
               }`}
             >
               <div className="space-y-8">
@@ -654,6 +759,8 @@ function App() {
                       href="https://www.linkedin.com/in/naga-narala/" 
                       target="_blank" 
                       rel="noopener noreferrer"
+                      title="LinkedIn Profile"
+                      aria-label="LinkedIn Profile"
                       className="bg-[#F5F0FF] p-3 rounded-full text-[#563D7C] hover:bg-[#563D7C] hover:text-white transition-all"
                     >
                       <Linkedin className="w-5 h-5" />
@@ -662,6 +769,8 @@ function App() {
                       href="https://github.com/naga-narala" 
                       target="_blank" 
                       rel="noopener noreferrer"
+                      title="GitHub Profile"
+                      aria-label="GitHub Profile"
                       className="bg-[#F5F0FF] p-3 rounded-full text-[#563D7C] hover:bg-[#563D7C] hover:text-white transition-all"
                     >
                       <Github className="w-5 h-5" />
@@ -670,6 +779,8 @@ function App() {
                       href="https://www.kaggle.com/sravankumarnnv" 
                       target="_blank" 
                       rel="noopener noreferrer"
+                      title="Kaggle Profile"
+                      aria-label="Kaggle Profile"
                       className="bg-[#F5F0FF] p-3 rounded-full text-[#563D7C] hover:bg-[#563D7C] hover:text-white transition-all"
                     >
                       <img src="/kaggle.svg" alt="Kaggle" className="w-5 h-5" />
@@ -682,7 +793,7 @@ function App() {
             {/* Conditional Rendering: Form or Confirmation */}
             <div 
               className={`transition-all duration-500 delay-300 ${
-                isVisible(contactSectionRef.current) ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-20'
+                isVisible(contactGridRef.current) ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-20'
               }`}
             >
               {!isConfirming ? (
